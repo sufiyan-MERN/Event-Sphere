@@ -1,0 +1,29 @@
+.filter-select { display: flex; flex-direction: column; gap: 6px; padding: 0 0 12px; color: #8d8389; }
+
+.filter-select > span { font-size: 8px; font-weight: 700; letter-spacing: .12em; }
+
+.filter-select select { width: 100%; min-height: 38px; border: 1px solid rgba(43, 36, 48, .13); border-radius: 8px; padding: 0 11px; color: #39333d; background: #fffdfa; cursor: pointer; font-size: 10px; }
+
+.filter-select select:focus { border-color: var(--coral); outline: 0; }
+
+.filter-panel { position: sticky; top: 99px; border-right: 1px solid var(--line); padding-right: 20px; }
+
+.filter-panel__top { display: flex; align-items: center; justify-content: space-between; margin: 0 0 19px; }
+
+.filter-panel__top h2 { margin: 3px 0 0; font-size: 20px; letter-spacing: -.05em; }
+
+.filter-panel__top .eyebrow { font-size: 8px; }
+
+@media (max-width: 768px) {
+.filter-panel { position: static; display: none; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 10px; border: 1px solid var(--line); border-radius: 13px; padding: 14px; background: rgba(255, 255, 255, .55); }
+
+.filter-panel__top { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+.filter-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 8px; padding: 11px; }
+
+.filter-panel .filter-select { padding-bottom: 9px; }
+
+.filter-panel .filter-select select { min-height: 34px; font-size: 9px; }
+}

@@ -1,0 +1,75 @@
+.modal-backdrop {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(22, 18, 27, 0.53);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.15s ease-out;
+}
+
+.modal-panel {
+  position: relative;
+  width: min(420px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 19px;
+  padding: 26px;
+  background: var(--paper);
+  box-shadow: 0 25px 65px rgba(15, 12, 20, 0.27);
+  animation: pop-in 0.18s ease-out;
+}
+
+.modal-close {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+}
+
+.modal-panel h2 {
+  margin: 7px 40px 9px 0;
+  font-size: 25px;
+  letter-spacing: -0.06em;
+}
+
+.modal-copy {
+  color: #79717a;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.modal-copy p {
+  margin: 0;
+}
+
+.modal-copy strong {
+  color: var(--ink);
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.modal-actions .button {
+  min-height: 40px;
+  font-size: 10px;
+}
+
+@media (max-width: 480px) {
+  .modal-panel {
+    padding: 22px 17px;
+  }
+
+  .modal-actions {
+    justify-content: flex-start;
+  }
+
+  .modal-actions .button {
+    font-size: 9px;
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "routes": [
+    { "path": "/", "title": "Home" },
+    { "path": "/movies", "title": "Movies" },
+    { "path": "/events", "title": "Events" },
+    { "path": "/events/:id", "title": "Event details" },
+    { "path": "/movies/:id", "title": "Movie details" },
+    { "path": "/show/:id/seats", "title": "Choose seats" },
+    { "path": "/checkout", "title": "Checkout" },
+    { "path": "/payment", "title": "Payment" },
+    { "path": "/booking/success", "title": "Booking confirmed" },
+    { "path": "/bookings", "title": "My bookings" },
+    { "path": "/bookings/:id", "title": "Booking details" },
+    { "path": "/profile", "title": "Profile" },
+    { "path": "/login", "title": "Login" },
+    { "path": "/register", "title": "Register" }
+  ]
+}

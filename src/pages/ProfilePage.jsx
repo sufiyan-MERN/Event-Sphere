@@ -1,0 +1,34 @@
+import { useMemo, useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useBooking } from '../context/BookingContext.jsx';
+import { getItem } from '../data/content.js';
+import { MediaCard } from '../components/MediaCard.jsx';
+import Icon from '../components/Icon.jsx';
+import '../styles/pages/ProfilePage.css';
+
+const sections = [
+  ['bookings', 'My Bookings', 'Your tickets and nights out'], ['saved', 'Saved events', 'The ones you don’t want to forget'],
+  ['updates', 'Notifications', 'A little news and inspiration'], ['settings', 'Account settings', 'Your details, your way'],
+];
+
+export default function ProfilePage() {
+  const { profile, updateProfile, bookings, favorites, preferences, setPreferences, isAuthenticated, signOut, showToast } = useBooking();
+  const [active, setActive] = useState('bookings');
+  const [editing, setEditing] = useState(false);
+  const navigate = useNavigate();
+  const savedItems = useMemo(() => favorites.map(getItem).filter(Boolean), [favorites]);
+  const upcomingCount = bookings.filter((booking) => booking.status === 'Upcoming').length;
+  const onLogout = () => { signOut(); showToast('You’ve been signed out of this local demo.'); navigate('/login'); };
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  return <main className="page-shell profile-page"><div className="profile-header"><span className="eyebrow">YOUR SHOWBOOK</span><h1>Your nights, <em>your way.</em></h1><div className="profile-identity"><img className="avatar avatar--large avatar--photo" src="/profile-avatar.svg" alt={`Profile image for ${profile.name}`} /><div><strong>{profile.name}</strong><span>{profile.email}</span><span>{profile.phone}</span></div><button type="button" className="button button--outline" onClick={() => setEditing((value) => !value)}>{editing ? 'Done' : 'Edit profile'}</button></div></div>
+    {editing && <div className="profile-edit form-card"><span className="eyebrow">YOUR DETAILS</span><div className="form-row"><label className="form-field"><span>Name</span><input value={profile.name} onChange={(event) => updateProfile({ name: event.target.value, avatar: event.target.value.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase() })} /></label><label className="form-field"><span>Email</span><input type="email" value={profile.email} onChange={(event) => updateProfile({ email: event.target.value })} /></label></div><label className="form-field"><span>Phone</span><input value={profile.phone} onChange={(event) => updateProfile({ phone: event.target.value })} /></label></div>}
+    <div className="profile-layout"><nav className="profile-menu" aria-label="Profile sections">{sections.map(([id, title, subtitle]) => <button key={id} type="button" className={active === id ? 'profile-menu__item profile-menu__item--active' : 'profile-menu__item'} onClick={() => setActive(id)}><span className="profile-menu__spark">✦</span><span><strong>{title}</strong><small>{subtitle}</small></span><Icon name="chevronRight" size={16} /></button>)}<button className="profile-menu__item profile-menu__item--logout" type="button" onClick={onLogout}><span className="profile-menu__spark">↗</span><span><strong>Log out</strong><small>Just for this demo session</small></span></button></nav>
+      <section className="profile-content">
+        {active === 'bookings' && <div className="profile-panel"><div className="profile-panel__heading"><div><span className="eyebrow">A QUICK LOOK</span><h2>Your bookings</h2></div><span className="profile-count">{upcomingCount} upcoming</span></div>{bookings.slice(0, 3).map((booking) => <Link className="profile-booking" key={booking.id} to={`/bookings/${booking.id}`}><img src={booking.poster} alt="" /><span><strong>{booking.title}</strong><small>{booking.date} · {booking.time} · {booking.seats.join(', ')}</small></span><Icon name="arrow" size={16} /></Link>)}<Link className="profile-panel__link" to="/bookings">See all bookings <Icon name="arrow" size={15} /></Link></div>}
+        {active === 'saved' && <div className="profile-panel"><div className="profile-panel__heading"><div><span className="eyebrow">ON YOUR MIND</span><h2>Saved events</h2></div><span className="profile-count">{savedItems.length} saved</span></div>{savedItems.length ? <div className="media-grid media-grid--profile">{savedItems.map((item) => <MediaCard item={item} compact key={item.id} />)}</div> : <p>Save a show or film to keep it close by.</p>}</div>}
+        {active === 'updates' && <div className="profile-panel"><span className="eyebrow">GOOD TO KNOW</span><h2>Notifications</h2><div className="notification-card"><span className="notification-dot" /><div><strong>Your first booking comes with a little something.</strong><p>Use FIRSTBOOKING at checkout to save 10% on eligible tickets.</p><small>Just now · Demo message</small></div></div><div className="notification-card"><span className="notification-dot notification-dot--violet" /><div><strong>Hyderabad has a new reason to stay out.</strong><p>Indie After Dark brings fresh sounds to Lakeside Arena on 10 October.</p><small>Today · Demo message</small></div></div></div>}
+        {active === 'settings' && <div className="profile-panel"><span className="eyebrow">MAKE IT FEEL LIKE YOU</span><h2>Account settings</h2><p>Your preferences are stored in this browser only.</p><label className="preference-toggle"><span><strong>Movies and new releases</strong><small>Get discovery suggestions for the big screen.</small></span><input type="checkbox" checked={preferences.preferredCategories.includes('Movies')} onChange={(event) => setPreferences((current) => ({ ...current, preferredCategories: event.target.checked ? [...new Set([...current.preferredCategories, 'Movies'])] : current.preferredCategories.filter((item) => item !== 'Movies') }))} /></label><label className="preference-toggle"><span><strong>Concerts and live events</strong><small>Keep the city’s next great show close.</small></span><input type="checkbox" checked={preferences.preferredCategories.includes('Concerts')} onChange={(event) => setPreferences((current) => ({ ...current, preferredCategories: event.target.checked ? [...new Set([...current.preferredCategories, 'Concerts'])] : current.preferredCategories.filter((item) => item !== 'Concerts') }))} /></label><button className="button button--outline" type="button" onClick={() => { showToast('Your demo preferences are saved.'); navigate('/'); }}>Save preferences</button></div>}
+      </section></div>
+  </main>;
+}

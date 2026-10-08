@@ -1,0 +1,85 @@
+.seat-map-panel { min-width: 0; border: 1px solid var(--line); border-radius: 17px; padding: 20px 18px 17px; background: rgba(255, 255, 255, .58); }
+
+.seat-map-panel__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 13px; }
+
+.seat-map-panel__top > span:last-child { color: #8e858c; font-size: 9px; }
+
+.screen-curtain { position: relative; display: flex; width: 72%; min-height: 50px; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255, 104, 72, .2); border-radius: 50% 50% 7px 7px / 100% 100% 8px 8px; margin: 13px auto 28px; color: #8f7575; background: linear-gradient(180deg, rgba(255, 104, 72, .08), rgba(255, 104, 72, .01)); font-size: 8px; font-weight: 700; letter-spacing: .28em; }
+
+.screen-glow { position: absolute; bottom: -33px; width: 73%; height: 43px; border-radius: 50%; background: rgba(255, 104, 72, .15); filter: blur(22px); }
+
+.seat-map-scroller { width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-color: #d7cbc7 transparent; scrollbar-width: thin; }
+
+.seat-map { min-width: 465px; padding: 0 5px 8px; }
+
+.seat-row { display: grid; grid-template-columns: 18px minmax(0, 1fr) 39px; align-items: center; gap: 11px; margin: 8px 0; }
+
+.seat-row__label { color: #9b9197; font-size: 9px; font-weight: 700; text-align: center; }
+
+.seat-row__price { color: #8a7b7f; font-size: 8px; font-weight: 500; }
+
+.seat-row__seats { display: grid; grid-template-columns: repeat(8, minmax(30px, 1fr)); justify-items: center; gap: clamp(6px, 1.4vw, 14px); }
+
+.seat { display: grid; width: 29px; height: 27px; place-items: center; border: 1px solid #b4cab9; border-radius: 8px 8px 5px 5px; color: #447253; background: #e4f0e7; cursor: pointer; font-size: 8px; transition: transform .15s, background .15s, border-color .15s; }
+
+.seat:not(:disabled):hover { border-color: #3e905d; transform: translateY(-2px); }
+
+.seat--selected { border-color: var(--coral); color: #fff; background: var(--coral); box-shadow: 0 4px 12px rgba(255, 104, 72, .23); }
+
+.seat--locked { border-color: #ddd3c6; color: #a49a91; background: #e5ded7; cursor: not-allowed; }
+
+.seat--booked { border-color: #aaa2a8; color: #fff; background: #aaa2a8; cursor: not-allowed; }
+
+.seat-tier-note { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); margin-top: 14px; padding-top: 12px; color: #8c8388; font-size: 9px; }
+
+.seat-tier-note span:last-child { display: inline-flex; align-items: center; gap: 7px; }
+
+.seat-tier-note i { width: 3px; height: 3px; border-radius: 50%; background: var(--coral); }
+
+.seat-legend { display: flex; flex-wrap: wrap; gap: 12px 19px; margin-top: 18px; }
+
+.seat-legend > span { display: flex; align-items: center; gap: 6px; color: #817880; font-size: 9px; }
+
+.seat-key { width: 11px; height: 11px; border: 1px solid #b4cab9; border-radius: 3px; background: #e4f0e7; }
+
+.seat-key--selected { border-color: var(--coral); background: var(--coral); }
+
+.seat-key--locked { border-color: #ddd3c6; background: #e5ded7; }
+
+.seat-key--booked { border-color: #aaa2a8; background: #aaa2a8; }
+
+@media (max-width: 1100px) {
+.seat-map-panel { padding-right: 13px; padding-left: 13px; }
+}
+
+@media (max-width: 768px) {
+.seat-map-panel { min-width: 0; }
+}
+
+@media (max-width: 480px) {
+.seat-map-panel { border-radius: 13px; padding: 14px 10px 13px; }
+
+.seat-map-panel__top { align-items: flex-start; }
+
+.seat-map-panel__top > span:first-child { max-width: 55%; font-size: 8px; }
+
+.seat-map-panel__top > span:last-child { font-size: 8px; text-align: right; }
+
+.screen-curtain { width: 83%; min-height: 40px; margin-top: 7px; margin-bottom: 21px; font-size: 7px; }
+
+.seat-map { min-width: 430px; }
+
+.seat-row { grid-template-columns: 15px minmax(0, 1fr) 28px; gap: 6px; }
+
+.seat-row__seats { gap: 9px; }
+
+.seat { width: 27px; height: 25px; }
+
+.seat-tier-note { align-items: flex-start; font-size: 7px; }
+
+.seat-tier-note span:last-child { flex-wrap: wrap; justify-content: flex-end; }
+
+.seat-legend { gap: 10px 12px; }
+
+.seat-legend > span { font-size: 8px; }
+}
