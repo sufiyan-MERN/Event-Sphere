@@ -64,7 +64,7 @@ export default function HeroCarousel() {
           </div>
           <div className="hero-poster-wrap" aria-hidden="true">
             <img className="hero-poster" src={slide.poster} alt="" />
-            <span className="poster-orbit" />
+            {/* <span className="poster-orbit" /> */}
           </div>
         </div>
         <div className="hero-controls">

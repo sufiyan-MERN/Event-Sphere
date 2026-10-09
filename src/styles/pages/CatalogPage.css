@@ -1,22 +1,46 @@
 .catalog-page { padding-top: 51px; padding-bottom: 88px; }
 
+.catalog-category-section { margin-bottom: 27px; border: 1px solid #F0E8E1; border-radius: 18px; padding: 17px; background: linear-gradient(115deg, #FFF7EF, #F5F7FF); }
+
+.catalog-category-section .category-section__top { margin-bottom: 15px; }
+
+.catalog-category-section .category-card__label { font-size: 13px; }
+
+.catalog-category-section .category-card--coral { border-color: #F7D8C6; background: #FFF0E6; }
+.catalog-category-section .category-card--violet { border-color: #E2D7FA; background: #F2ECFF; }
+.catalog-category-section .category-card--amber { border-color: #F3E1B6; background: #FFF6DD; }
+.catalog-category-section .category-card--mint { border-color: #CDE9D7; background: #EAF7EF; }
+.catalog-category-section .category-card--rose { border-color: #F2D5DD; background: #FFF0F3; }
+.catalog-category-section .category-card--blue { border-color: #D5E1F5; background: #EEF4FF; }
+.catalog-category-section .category-card--gold { border-color: #F0E1B9; background: #FFF8E5; }
+.catalog-category-section .category-card--pink { border-color: #F0D8E8; background: #FFF0F8; }
+
+.catalog-category-section .category-card--coral .category-card__icon { color: #C2410C; background: #FFE1CF; }
+.catalog-category-section .category-card--violet .category-card__icon { color: #6D28D9; background: #E7DBFF; }
+.catalog-category-section .category-card--amber .category-card__icon { color: #A16207; background: #FCE9B4; }
+.catalog-category-section .category-card--mint .category-card__icon { color: #15803D; background: #D4F0DD; }
+.catalog-category-section .category-card--rose .category-card__icon { color: #BE185D; background: #FFD9E4; }
+.catalog-category-section .category-card--blue .category-card__icon { color: #1D4ED8; background: #DCE8FF; }
+.catalog-category-section .category-card--gold .category-card__icon { color: #854D0E; background: #F6E9BC; }
+.catalog-category-section .category-card--pink .category-card__icon { color: #A21CAF; background: #F8DDF5; }
+
 .catalog-heading { display: flex; align-items: end; justify-content: space-between; gap: 35px; padding: 4px 0 35px; }
 
 .catalog-heading h1 { margin: 12px 0 12px; font-size: clamp(42px, 6vw, 66px); letter-spacing: -.075em; line-height: .98; }
 
-.catalog-heading p { max-width: 450px; margin: 0; color: #777078; font-size: 13px; }
+.catalog-heading p { max-width: 450px; margin: 0; color: #71717A; font-size: 13px; }
 
-.catalog-aside { display: flex; align-items: center; gap: 10px; padding-bottom: 5px; color: #847c83; font-size: 9px; line-height: 1.5; text-transform: uppercase; letter-spacing: .1em; }
+.catalog-aside { display: flex; align-items: center; gap: 10px; padding-bottom: 5px; color: #71717A; font-size: 9px; line-height: 1.5; text-transform: uppercase; letter-spacing: .1em; }
 
-.catalog-aside__big { color: var(--coral); font-family: 'Space Grotesk', sans-serif; font-size: 44px; letter-spacing: -.07em; }
+.catalog-aside__big { color: var(--coral); font-family: 'Outfit', sans-serif; font-size: 44px; letter-spacing: -.07em; }
 
-.catalog-toolbar { display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 11px 0; }
+.catalog-toolbar { display: flex; align-items: center; gap: 12px; border: 1px solid #E5EAF2; border-radius: 15px; padding: 13px; background: linear-gradient(110deg, #F8FAFC, #F4F7FB); }
 
-.catalog-search { display: flex; min-width: 160px; flex: 1; align-items: center; gap: 9px; color: #978e94; }
+.catalog-search { display: flex; min-width: 160px; min-height: 56px; flex: 1; align-items: center; gap: 12px; border: 1px solid rgba(244, 81, 30, .32); border-radius: 12px; padding: 0 16px; color: #71717A; background: #FFFFFF; }
 
 .catalog-search > svg { color: var(--coral); }
 
-.catalog-search input { width: 100%; border: 0; outline: 0; background: transparent; font-size: 12px; }
+.catalog-search input { width: 100%; border: 0; outline: 0; background: transparent; font-size: 15px; }
 
 .filter-toggle { display: none; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 9px; padding: 9px 12px; background: transparent; cursor: pointer; font-size: 11px; }
 
@@ -30,9 +54,9 @@
 
 .sort-select select { min-width: 115px; }
 
-.catalog-layout { display: grid; grid-template-columns: 196px minmax(0, 1fr); align-items: start; gap: 28px; padding-top: 20px; }
+.catalog-layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); align-items: start; gap: 28px; padding-top: 20px; }
 
-.catalog-results__heading { display: flex; align-items: center; justify-content: space-between; margin: 0 0 15px; color: #8c8389; font-size: 10px; }
+.catalog-results__heading { display: flex; align-items: center; justify-content: space-between; margin: 0 0 15px; color: #71717A; font-size: 10px; }
 
 .catalog-results__city { display: inline-flex; align-items: center; gap: 5px; }
 
@@ -40,6 +64,8 @@
 
 @media (max-width: 768px) {
 .catalog-page { padding-top: 38px; }
+
+.catalog-category-section { margin-bottom: 20px; padding: 14px; }
 
 .catalog-heading { padding-bottom: 25px; }
 
@@ -63,6 +89,8 @@
 @media (max-width: 480px) {
 .catalog-page { padding-top: 31px; padding-bottom: 62px; }
 
+.catalog-category-section { margin-bottom: 15px; border-radius: 15px; padding: 12px; }
+
 .catalog-heading { align-items: center; gap: 10px; padding-bottom: 20px; }
 
 .catalog-heading h1 { margin: 9px 0; font-size: 42px; }
@@ -73,19 +101,19 @@
 
 .catalog-aside__big { font-size: 30px; }
 
-.catalog-toolbar { flex-wrap: wrap; gap: 8px; }
+.catalog-toolbar { flex-wrap: wrap; gap: 9px; padding: 10px; }
 
-.catalog-search { min-width: calc(100% - 112px); }
+.catalog-search { min-width: calc(100% - 112px); min-height: 48px; gap: 9px; border-radius: 10px; padding: 0 12px; }
 
-.catalog-search input { font-size: 10px; }
+.catalog-search input { font-size: 13px; }
 
-.filter-toggle { min-height: 35px; padding: 6px 9px; font-size: 9px; }
+.filter-toggle { min-height: 40px; padding: 7px 11px; font-size: 11px; }
 
 .filter-toggle svg { width: 15px; }
 
 .sort-select { width: 100%; justify-content: flex-end; }
 
-.sort-select select { min-height: 32px; }
+.sort-select select { min-height: 38px; }
 
 .catalog-results__heading { font-size: 8px; }
 }

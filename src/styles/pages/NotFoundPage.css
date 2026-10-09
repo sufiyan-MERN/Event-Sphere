@@ -1,12 +1,12 @@
 .not-found-page { display: flex; min-height: 600px; flex-direction: column; align-items: flex-start; justify-content: center; padding-top: 60px; padding-bottom: 60px; }
 
-.not-found-mark { margin-bottom: 20px; color: rgba(255, 104, 72, .21); font-family: 'Space Grotesk', sans-serif; font-size: 79px; font-weight: 700; letter-spacing: -.1em; }
+.not-found-mark { margin-bottom: 20px; color: rgba(255, 107, 53, .21); font-family: 'Outfit', sans-serif; font-size: 79px; font-weight: 700; letter-spacing: -.1em; }
 
 .not-found-mark i { color: var(--coral); font-size: 27px; font-style: normal; vertical-align: top; }
 
 .not-found-page h1 { margin: 9px 0; font-size: clamp(50px, 7vw, 72px); letter-spacing: -.08em; line-height: .97; }
 
-.not-found-page p { margin-bottom: 20px; color: #817981; font-size: 12px; }
+.not-found-page p { margin-bottom: 20px; color: #71717A; font-size: 12px; }
 
 @media (max-width: 480px) {
 .not-found-page { min-height: 475px; }

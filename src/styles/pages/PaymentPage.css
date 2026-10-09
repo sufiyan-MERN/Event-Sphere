@@ -4,7 +4,7 @@
 
 .payment-heading h1 { margin: 8px 0; font-size: clamp(38px, 5vw, 56px); letter-spacing: -.075em; line-height: .98; }
 
-.payment-heading p { margin: 0; color: #777078; font-size: 12px; }
+.payment-heading p { margin: 0; color: #71717A; font-size: 12px; }
 
 .payment-page { padding-bottom: 83px; }
 
@@ -34,13 +34,13 @@
 
 .payment-amount { display: grid; justify-items: end; margin-bottom: 2px; }
 
-.payment-amount small { color: #92878b; font-size: 8px; font-weight: 700; letter-spacing: .13em; }
+.payment-amount small { color: #71717A; font-size: 8px; font-weight: 700; letter-spacing: .13em; }
 
-.payment-amount strong { color: var(--coral-deep); font-family: 'Space Grotesk', sans-serif; font-size: 36px; letter-spacing: -.07em; }
+.payment-amount strong { color: var(--coral-deep); font-family: 'Outfit', sans-serif; font-size: 36px; letter-spacing: -.07em; }
 
 .payment-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 22px; }
 
-.payment-summary { align-self: start; background: #fffdfa; }
+.payment-summary { align-self: start; background: #FFFFFF; }
 
 .payment-event { display: flex; align-items: center; gap: 11px; border-bottom: 1px solid var(--line); margin-top: 14px; padding-bottom: 14px; }
 
@@ -48,11 +48,11 @@
 
 .payment-event > div { display: grid; gap: 4px; }
 
-.payment-event strong { font-family: 'Space Grotesk', sans-serif; font-size: 13px; }
+.payment-event strong { font-family: 'Outfit', sans-serif; font-size: 13px; }
 
-.payment-event span { color: #827a81; font-size: 9px; }
+.payment-event span { color: #71717A; font-size: 9px; }
 
-.payment-seatline { display: flex; justify-content: space-between; gap: 10px; padding: 11px 0 0; color: #847b82; font-size: 9px; }
+.payment-seatline { display: flex; justify-content: space-between; gap: 10px; padding: 11px 0 0; color: #71717A; font-size: 9px; }
 
 .payment-seatline strong { color: var(--ink); }
 

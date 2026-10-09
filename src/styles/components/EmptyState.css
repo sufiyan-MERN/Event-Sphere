@@ -1,16 +1,16 @@
-.empty-state { display: flex; min-height: 230px; flex-direction: column; align-items: center; justify-content: center; border: 1px dashed rgba(42, 36, 46, .19); border-radius: 18px; padding: 32px; text-align: center; background: rgba(255, 255, 255, .47); }
+.empty-state { display: flex; min-height: 230px; flex-direction: column; align-items: center; justify-content: center; border: 1px dashed rgba(24, 24, 27, .19); border-radius: 18px; padding: 32px; text-align: center; background: rgba(255, 255, 255, .47); }
 
-.empty-state__icon { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 50%; color: var(--coral-deep); background: #ffebe4; }
+.empty-state__icon { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 50%; color: var(--coral-deep); background: #FFF4ED; }
 
 .empty-state h3 { margin: 15px 0 5px; font-size: 20px; letter-spacing: -.04em; }
 
-.empty-state p { max-width: 360px; margin: 0 0 16px; color: #817980; font-size: 12px; }
+.empty-state p { max-width: 360px; margin: 0 0 16px; color: #71717A; font-size: 12px; }
 
 .skeleton-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 
 .skeleton-card { padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
 
-.skeleton-card__image, .skeleton-line { border-radius: 7px; background: linear-gradient(90deg, #ece7e4 25%, #f8f3ef 50%, #ece7e4 75%); background-size: 200% 100%; animation: shimmer 1.4s ease infinite; }
+.skeleton-card__image, .skeleton-line { border-radius: 7px; background: linear-gradient(90deg, #F4F4F5 25%, #F9FAFB 50%, #F4F4F5 75%); background-size: 200% 100%; animation: shimmer 1.4s ease infinite; }
 
 .skeleton-card__image { height: 190px; margin-bottom: 12px; }
 

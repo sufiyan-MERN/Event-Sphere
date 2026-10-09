@@ -1,6 +1,6 @@
 .booking-card { display: grid; grid-template-columns: 126px minmax(0, 1fr); gap: 17px; border: 1px solid var(--line); border-radius: 15px; padding: 12px; background: rgba(255, 255, 255, .72); transition: box-shadow .2s, transform .2s; }
 
-.booking-card:hover { box-shadow: 0 11px 25px rgba(38, 29, 41, .07); transform: translateY(-2px); }
+.booking-card:hover { box-shadow: 0 11px 25px rgba(24, 24, 27, .07); transform: translateY(-2px); }
 
 .booking-card__poster-link { overflow: hidden; border-radius: 10px; }
 
@@ -10,27 +10,27 @@
 
 .booking-card__heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 
-.booking-status { border-radius: 99px; padding: 5px 8px; color: #3d8455; background: #e4f2e7; font-size: 8px; font-weight: 700; }
+.booking-status { border-radius: 99px; padding: 5px 8px; color: #15803D; background: #F0FDF4; font-size: 8px; font-weight: 700; }
 
-.booking-status--completed { color: #6457ac; background: #eeeaff; }
+.booking-status--completed { color: #71717A; background: #FFF4ED; }
 
-.booking-status--cancelled { color: #9b6e68; background: #f3e8e6; }
+.booking-status--cancelled { color: #B91C1C; background: #FEF2F2; }
 
-.booking-card__id { color: #9a9196; font-family: 'Space Grotesk', sans-serif; font-size: 9px; letter-spacing: .05em; }
+.booking-card__id { color: #A1A1AA; font-family: 'Outfit', sans-serif; font-size: 9px; letter-spacing: .05em; }
 
-.booking-card__title { overflow: hidden; margin: 9px 0 3px; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -.05em; text-overflow: ellipsis; white-space: nowrap; }
+.booking-card__title { overflow: hidden; margin: 9px 0 3px; font-family: 'Outfit', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -.05em; text-overflow: ellipsis; white-space: nowrap; }
 
-.booking-card__venue { overflow: hidden; color: #807780; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.booking-card__venue { overflow: hidden; color: #71717A; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
 
 .booking-card__facts { display: flex; flex-wrap: wrap; gap: 8px 15px; margin: 11px 0 7px; }
 
-.booking-card__facts span { display: inline-flex; align-items: center; gap: 5px; color: #756d76; font-size: 9px; }
+.booking-card__facts span { display: inline-flex; align-items: center; gap: 5px; color: #71717A; font-size: 9px; }
 
 .booking-card__facts svg { color: var(--coral); }
 
 .booking-card__bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 9px; }
 
-.booking-card__bottom > strong { font-family: 'Space Grotesk', sans-serif; font-size: 16px; }
+.booking-card__bottom > strong { font-family: 'Outfit', sans-serif; font-size: 16px; }
 
 .booking-card__bottom > div { display: flex; flex-wrap: wrap; gap: 15px; }
 

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { allItems } from "../data/content.js";
 import { useBooking } from "../context/BookingContext.jsx";
@@ -14,8 +14,64 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cityOpen, setCityOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+
+  // Compact floating navbar once the page is scrolled past the hero threshold.
+  // Passive listener + rAF throttle keeps scroll jank-free; setState bails out
+  // when the boolean does not change. The timeout is a safety net: browsers
+  // drop rAF callbacks in hidden/occluded tabs, which would otherwise leave
+  // the throttle flag stuck and freeze the navbar state.
+  useEffect(() => {
+    let frame = 0;
+    let fallback = 0;
+    const update = () => {
+      if (frame) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+      if (fallback) {
+        clearTimeout(fallback);
+        fallback = 0;
+      }
+      setScrolled(window.scrollY > 24);
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+      if (!fallback) fallback = setTimeout(update, 120);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+      if (fallback) clearTimeout(fallback);
+    };
+  }, []);
+
+  // Escape closes any open overlay.
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key !== "Escape") return;
+      setMenuOpen(false);
+      setCityOpen(false);
+      setSearchOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  // Collapse the mobile menu if the viewport grows back to desktop.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 769px)");
+    const onChange = (event) => {
+      if (event.matches) setMenuOpen(false);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   const matches = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -35,9 +91,9 @@ export default function Navbar() {
     { label: "Home", to: "/" },
     { label: "Movies", to: "/movies" },
     { label: "Events", to: "/events" },
-    { label: "Sports", to: "/events?category=Sports" },
-    { label: "Concerts", to: "/events?category=Concerts" },
-    { label: "Comedy", to: "/events?category=Comedy" },
+    // { label: "Sports", to: "/events?category=Sports" },
+    // { label: "Concerts", to: "/events?category=Concerts" },
+    // { label: "Comedy", to: "/events?category=Comedy" },
     // { label: "Login", to: "/login" },
   ];
 
@@ -50,7 +106,9 @@ export default function Navbar() {
   };
 
   return (
-    <header className="site-header">
+    <header
+      className={`site-header ${scrolled ? "site-header--scrolled" : ""}`}
+    >
       <div className="nav-wrap">
         <Link
           to="/"
@@ -72,11 +130,12 @@ export default function Navbar() {
           className={`primary-nav ${menuOpen ? "primary-nav--open" : ""}`}
           aria-label="Main navigation"
         >
-          {navItems.map((item) => (
+          {navItems.map((item, index) => (
             <NavLink
               key={item.label}
               to={item.to}
               onClick={() => setMenuOpen(false)}
+              style={{ "--i": index }}
               className={({ isActive }) =>
                 `nav-link ${isActive ? "nav-link--active" : ""}`
               }
@@ -173,6 +232,13 @@ export default function Navbar() {
               </span>
             </Link>
           )}
+          <Link
+            to="/events"
+            className="nav-cta"
+            onClick={() => setMenuOpen(false)}
+          >
+            Book tickets
+          </Link>
           <button
             className="mobile-menu-toggle"
             type="button"
@@ -248,6 +314,11 @@ export default function Navbar() {
           )}
         </div>
       )}
+      <div
+        className={`nav-scrim ${menuOpen ? "nav-scrim--visible" : ""}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
     </header>
   );
 }

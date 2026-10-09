@@ -2,39 +2,39 @@
 
 .category-section__top { display: flex; justify-content: space-between; margin: 0 0 13px; }
 
-.category-section__top .eyebrow { color: #8b8081; }
+.category-section__top .eyebrow { color: #71717A; }
 
-.section-index { color: #9d9496; font-size: 9px; letter-spacing: .12em; }
+.section-index { color: #A1A1AA; font-size: 9px; letter-spacing: .12em; }
 
 .category-rail { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; }
 
-.category-card { position: relative; display: grid; min-height: 107px; grid-template-rows: 1fr auto; border: 1px solid rgba(50, 44, 56, .1); border-radius: 15px; padding: 13px 14px; overflow: hidden; background: rgba(255, 255, 255, .68); transition: transform .2s, box-shadow .2s, border-color .2s; }
+.category-card { position: relative; display: grid; min-height: 107px; grid-template-rows: 1fr auto; border: 1px solid rgba(24, 24, 27, .1); border-radius: 15px; padding: 13px 14px; overflow: hidden; background: rgba(255, 255, 255, .68); transition: transform .2s, box-shadow .2s, border-color .2s; }
 
-.category-card:hover { z-index: 1; border-color: rgba(255, 104, 72, .32); box-shadow: 0 11px 28px rgba(35, 28, 38, .07); transform: translateY(-3px); }
+.category-card:hover { z-index: 1; border-color: rgba(255, 107, 53, .32); box-shadow: 0 11px 28px rgba(24, 24, 27, .07); transform: translateY(-3px); }
 
-.category-card__number { position: absolute; top: 11px; right: 12px; color: #aaa1a4; font-family: 'Space Grotesk', sans-serif; font-size: 8px; }
+.category-card__number { position: absolute; top: 11px; right: 12px; color: #A1A1AA; font-family: 'Outfit', sans-serif; font-size: 8px; }
 
 .category-card__icon { display: inline-grid; width: 37px; height: 37px; place-items: center; border-radius: 11px; font-size: 20px; }
 
-.category-card--coral .category-card__icon { color: #e85f42; background: #fff0ea; }
+.category-card--coral .category-card__icon { color: #FF6B35; background: #FFF4ED; }
 
-.category-card--violet .category-card__icon { color: #6759d0; background: #efecff; }
+.category-card--violet .category-card__icon { color: #FF6B35; background: #FFF4ED; }
 
-.category-card--amber .category-card__icon { color: #a06a08; background: #fff4d9; }
+.category-card--amber .category-card__icon { color: #F4511E; background: #FFF4ED; }
 
-.category-card--mint .category-card__icon { color: #2f7552; background: #e2f3e8; }
+.category-card--mint .category-card__icon { color: #15803D; background: #F0FDF4; }
 
-.category-card--rose .category-card__icon { color: #bc4b71; background: #fae9ef; }
+.category-card--rose .category-card__icon { color: #F4511E; background: #FFF4ED; }
 
-.category-card--blue .category-card__icon { color: #3c7793; background: #e6f3f8; }
+.category-card--blue .category-card__icon { color: #F4511E; background: #FFF4ED; }
 
-.category-card--gold .category-card__icon { color: #9a6b17; background: #fff2d7; }
+.category-card--gold .category-card__icon { color: #F4511E; background: #FFF4ED; }
 
-.category-card--pink .category-card__icon { color: #bf527e; background: #fde8f1; }
+.category-card--pink .category-card__icon { color: #F4511E; background: #FFF4ED; }
 
-.category-card__label { align-self: end; color: var(--ink); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; }
+.category-card__label { align-self: end; color: var(--ink); font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; }
 
-.category-card__arrow { position: absolute; right: 12px; bottom: 13px; color: #aaa1a4; opacity: 0; transition: opacity .2s, transform .2s; }
+.category-card__arrow { position: absolute; right: 12px; bottom: 13px; color: #A1A1AA; opacity: 0; transition: opacity .2s, transform .2s; }
 
 .category-card:hover .category-card__arrow { opacity: 1; transform: translateX(2px); }
 

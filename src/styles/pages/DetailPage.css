@@ -1,10 +1,10 @@
 .detail-page { min-height: 70vh; }
 
-.detail-hero { position: relative; display: flex; min-height: 402px; align-items: center; overflow: hidden; background: #1d1923; color: white; isolation: isolate; }
+.detail-hero { position: relative; display: flex; min-height: 402px; align-items: center; overflow: hidden; background: #18181B; color: white; isolation: isolate; }
 
 .detail-hero::before { position: absolute; z-index: -2; inset: -10px; background-image: var(--detail-image); background-position: center 38%; background-size: cover; content: ''; filter: blur(2px); transform: scale(1.035); }
 
-.detail-hero__veil { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(18, 15, 23, .92), rgba(25, 20, 30, .7) 44%, rgba(18, 15, 23, .24)), linear-gradient(0deg, rgba(17, 14, 21, .6), transparent 66%); }
+.detail-hero__veil { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(24, 24, 27, .92), rgba(24, 24, 27, .7) 44%, rgba(24, 24, 27, .24)), linear-gradient(0deg, rgba(24, 24, 27, .6), transparent 66%); }
 
 .detail-hero__inner { padding-top: 51px; padding-bottom: 46px; }
 
@@ -12,7 +12,7 @@
 
 .detail-breadcrumb a:hover { color: #fff; }
 
-.detail-eyebrow { color: #ffd0c2; }
+.detail-eyebrow { color: #FFE3D8; }
 
 .detail-hero h1 { max-width: 720px; margin: 8px 0 13px; font-size: clamp(43px, 6.5vw, 70px); letter-spacing: -.075em; line-height: .98; }
 
@@ -24,25 +24,25 @@
 
 .detail-poster-column { margin-top: -82px; }
 
-.detail-poster { width: 100%; height: 320px; border: 5px solid var(--paper); border-radius: 16px; object-fit: cover; box-shadow: 0 20px 44px rgba(18, 14, 24, .23); }
+.detail-poster { width: 100%; height: 320px; border: 5px solid var(--paper); border-radius: 16px; object-fit: cover; box-shadow: 0 20px 44px rgba(24, 24, 27, .23); }
 
 .detail-score { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); padding: 17px 4px; }
 
-.detail-score__icon { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; color: #8a620f; background: #ffedc9; }
+.detail-score__icon { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; color: #F4511E; background: #FFF4ED; }
 
-.detail-score__icon svg { fill: #e0a427; }
+.detail-score__icon svg { fill: #F4511E; }
 
 .detail-score > div { display: grid; }
 
-.detail-score strong { font-family: 'Space Grotesk', sans-serif; font-size: 18px; }
+.detail-score strong { font-family: 'Outfit', sans-serif; font-size: 18px; }
 
-.detail-score strong small { color: #aaa1a4; font-size: 9px; font-weight: 500; }
+.detail-score strong small { color: #A1A1AA; font-size: 9px; font-weight: 500; }
 
-.detail-score > div > span { color: #8b8288; font-size: 9px; }
+.detail-score > div > span { color: #71717A; font-size: 9px; }
 
 .detail-facts { display: grid; gap: 12px; padding: 16px 4px; }
 
-.detail-facts span { display: flex; align-items: center; gap: 9px; color: #68616b; font-size: 11px; }
+.detail-facts span { display: flex; align-items: center; gap: 9px; color: #71717A; font-size: 11px; }
 
 .detail-facts svg { color: var(--coral); }
 
@@ -50,17 +50,17 @@
 
 .detail-overview h2 { margin: 8px 0 12px; font-size: 32px; letter-spacing: -.06em; line-height: 1.05; }
 
-.detail-overview p { max-width: 580px; color: #716a73; font-size: 12px; line-height: 1.8; }
+.detail-overview p { max-width: 580px; color: #71717A; font-size: 12px; line-height: 1.8; }
 
 .detail-tags { display: flex; flex-wrap: wrap; gap: 7px; }
 
-.detail-tags span { border: 1px solid rgba(40, 34, 44, .12); border-radius: 99px; padding: 6px 10px; color: #706871; font-size: 9px; }
+.detail-tags span { border: 1px solid rgba(24, 24, 27, .12); border-radius: 99px; padding: 6px 10px; color: #71717A; font-size: 9px; }
 
 .booking-selection { border-top: 1px solid var(--line); padding-top: 26px; }
 
-.detail-terms { max-width: 700px; margin: 23px 0 0; border-top: 1px solid var(--line); padding-top: 16px; color: #8b8389; font-size: 9px; line-height: 1.7; }
+.detail-terms { max-width: 700px; margin: 23px 0 0; border-top: 1px solid var(--line); padding-top: 16px; color: #71717A; font-size: 9px; line-height: 1.7; }
 
-.detail-terms strong { display: block; margin-bottom: 3px; color: #534d56; }
+.detail-terms strong { display: block; margin-bottom: 3px; color: #52525B; }
 
 .detail-not-found { min-height: 53vh; display: grid; place-items: center; padding-top: 55px; padding-bottom: 55px; }
 

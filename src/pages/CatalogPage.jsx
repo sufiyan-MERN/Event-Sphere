@@ -5,6 +5,7 @@ import { useBooking } from "../context/BookingContext.jsx";
 import { MediaCard } from "../components/MediaCard.jsx";
 import { EmptyState } from "../components/EmptyState.jsx";
 import SearchBar from "../components/SearchBar.jsx";
+import CategoryRail from "../components/CategoryRail.jsx";
 import FilterPanel from "../components/FilterPanel.jsx";
 import Icon from "../components/Icon.jsx";
 import "../styles/pages/CatalogPage.css";
@@ -188,6 +189,13 @@ function CatalogPage({ type }) {
           </span>
         </div>
       </div> */}
+      <section className="catalog-category-section" aria-label="Browse by category">
+        <div className="category-section__top">
+          <span className="eyebrow">BROWSE BY CATEGORY</span>
+          <span className="section-index">01 / 08</span>
+        </div>
+        <CategoryRail />
+      </section>
       <div className="catalog-toolbar">
         <SearchBar
           value={search}
@@ -221,26 +229,6 @@ function CatalogPage({ type }) {
         className={`catalog-layout ${filtersOpen ? "catalog-layout--filters-open" : ""}`}
       >
         <FilterPanel onReset={reset}>
-          {!isMovies && (
-            <FilterSelect
-              label="CATEGORY"
-              value={category}
-              onChange={setCategory}
-              options={[
-                ["", "All categories"],
-                ...[
-                  "Concerts",
-                  "Sports",
-                  "Comedy",
-                  "Theatre",
-                  "Workshops",
-                  "Festivals",
-                  "Kids",
-                  "Experiences",
-                ].map((item) => [item, item]),
-              ]}
-            />
-          )}
           {isMovies && (
             <>
               <FilterSelect

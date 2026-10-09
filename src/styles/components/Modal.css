@@ -5,7 +5,7 @@
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgba(22, 18, 27, 0.53);
+  background: rgba(24, 24, 27, 0.53);
   backdrop-filter: blur(4px);
   animation: fade-in 0.15s ease-out;
 }
@@ -17,7 +17,7 @@
   border-radius: 19px;
   padding: 26px;
   background: var(--paper);
-  box-shadow: 0 25px 65px rgba(15, 12, 20, 0.27);
+  box-shadow: 0 25px 65px rgba(24, 24, 27, 0.27);
   animation: pop-in 0.18s ease-out;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .modal-copy {
-  color: #79717a;
+  color: #71717A;
   font-size: 11px;
   line-height: 1.7;
 }

@@ -8,9 +8,9 @@
 
 .profile-identity > div { display: grid; flex: 1; gap: 4px; }
 
-.profile-identity > div strong { font-family: 'Space Grotesk', sans-serif; font-size: 16px; }
+.profile-identity > div strong { font-family: 'Outfit', sans-serif; font-size: 16px; }
 
-.profile-identity > div span { color: #817982; font-size: 10px; }
+.profile-identity > div span { color: #71717A; font-size: 10px; }
 
 .profile-identity .button { min-height: 37px; font-size: 10px; }
 
@@ -22,21 +22,21 @@
 
 .profile-menu__item { display: flex; min-height: 64px; align-items: center; gap: 10px; border: 1px solid transparent; border-radius: 11px; padding: 8px 10px; text-align: left; background: transparent; cursor: pointer; }
 
-.profile-menu__item:hover, .profile-menu__item--active { border-color: rgba(255, 104, 72, .16); background: #fff0ea; }
+.profile-menu__item:hover, .profile-menu__item--active { border-color: rgba(255, 107, 53, .16); background: #FFF4ED; }
 
-.profile-menu__spark { display: grid; width: 29px; height: 29px; flex: 0 0 auto; place-items: center; border-radius: 9px; color: var(--coral-deep); background: rgba(255, 104, 72, .11); font-size: 15px; }
+.profile-menu__spark { display: grid; width: 29px; height: 29px; flex: 0 0 auto; place-items: center; border-radius: 9px; color: var(--coral-deep); background: rgba(255, 107, 53, .11); font-size: 15px; }
 
 .profile-menu__item > span:nth-child(2) { display: grid; min-width: 0; flex: 1; gap: 3px; }
 
 .profile-menu__item strong { font-size: 10px; }
 
-.profile-menu__item small { overflow: hidden; color: #928990; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.profile-menu__item small { overflow: hidden; color: #71717A; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
 
-.profile-menu__item > svg { color: #a79da3; }
+.profile-menu__item > svg { color: #A1A1AA; }
 
 .profile-menu__item--logout { margin-top: 9px; border-top: 1px solid var(--line); border-radius: 0; padding-top: 14px; }
 
-.profile-menu__item--logout .profile-menu__spark { color: #826f71; background: #eee6e4; }
+.profile-menu__item--logout .profile-menu__spark { color: #71717A; background: #F4F4F5; }
 
 .profile-content { min-width: 0; }
 
@@ -46,7 +46,7 @@
 
 .profile-panel__heading h2, .profile-panel > h2 { margin: 4px 0 0; font-size: 24px; letter-spacing: -.06em; }
 
-.profile-count { color: #857c83; font-size: 9px; }
+.profile-count { color: #71717A; font-size: 9px; }
 
 .profile-booking { display: flex; align-items: center; gap: 11px; border-top: 1px solid var(--line); padding: 11px 0; }
 
@@ -54,9 +54,9 @@
 
 .profile-booking > span { display: grid; min-width: 0; flex: 1; gap: 4px; }
 
-.profile-booking strong { overflow: hidden; font-family: 'Space Grotesk', sans-serif; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.profile-booking strong { overflow: hidden; font-family: 'Outfit', sans-serif; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
 
-.profile-booking small { overflow: hidden; color: #8b828a; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.profile-booking small { overflow: hidden; color: #71717A; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
 
 .profile-booking > svg { color: var(--coral); }
 
@@ -68,17 +68,17 @@
 
 .notification-card { display: flex; align-items: flex-start; gap: 10px; border-top: 1px solid var(--line); padding: 15px 0; }
 
-.notification-dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; margin-top: 4px; background: var(--coral); box-shadow: 0 0 0 4px #ffe7de; }
+.notification-dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; margin-top: 4px; background: var(--coral); box-shadow: 0 0 0 4px #FFF4ED; }
 
-.notification-dot--violet { background: var(--violet); box-shadow: 0 0 0 4px #ece9ff; }
+.notification-dot--violet { background: var(--violet); box-shadow: 0 0 0 4px #FFF4ED; }
 
 .notification-card strong { font-size: 10px; }
 
-.notification-card p { margin: 4px 0; color: #827980; font-size: 9px; }
+.notification-card p { margin: 4px 0; color: #71717A; font-size: 9px; }
 
-.notification-card small { color: #a29a9e; font-size: 8px; }
+.notification-card small { color: #A1A1AA; font-size: 8px; }
 
-.profile-panel > p { margin: 7px 0 18px; color: #817980; font-size: 10px; }
+.profile-panel > p { margin: 7px 0 18px; color: #71717A; font-size: 10px; }
 
 .preference-toggle { display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid var(--line); padding: 15px 0; }
 
@@ -86,7 +86,7 @@
 
 .preference-toggle strong { font-size: 10px; }
 
-.preference-toggle small { color: #898189; font-size: 9px; }
+.preference-toggle small { color: #71717A; font-size: 9px; }
 
 .preference-toggle input { width: 35px; height: 19px; accent-color: var(--coral); cursor: pointer; }
 

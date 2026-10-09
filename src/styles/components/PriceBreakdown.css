@@ -1,11 +1,11 @@
 .price-breakdown { padding: 12px 0 3px; }
 
-.price-breakdown__row, .price-breakdown__total { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; color: #80777e; font-size: 10px; }
+.price-breakdown__row, .price-breakdown__total { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 0; color: #71717A; font-size: 10px; }
 
-.price-breakdown__row strong { color: #3a353e; font-size: 10px; }
+.price-breakdown__row strong { color: #3F3F46; font-size: 10px; }
 
-.price-breakdown__row--discount, .price-breakdown__row--discount strong { color: #43845d; }
+.price-breakdown__row--discount, .price-breakdown__row--discount strong { color: #15803D; }
 
-.price-breakdown__total { border-top: 1px dashed rgba(37, 32, 42, .2); margin-top: 7px; padding: 14px 0 8px; color: #302b35; font-size: 11px; font-weight: 700; }
+.price-breakdown__total { border-top: 1px dashed rgba(24, 24, 27, .2); margin-top: 7px; padding: 14px 0 8px; color: #27272A; font-size: 11px; font-weight: 700; }
 
-.price-breakdown__total strong { font-family: 'Space Grotesk', sans-serif; font-size: 22px; }
+.price-breakdown__total strong { font-family: 'Outfit', sans-serif; font-size: 22px; }

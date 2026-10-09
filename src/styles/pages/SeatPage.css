@@ -4,21 +4,21 @@
 
 .seat-page-heading h1 { margin: 8px 0; font-size: clamp(38px, 5vw, 56px); letter-spacing: -.075em; line-height: .98; }
 
-.seat-page-heading p { margin: 0; color: #777078; font-size: 12px; }
+.seat-page-heading p { margin: 0; color: #71717A; font-size: 12px; }
 
 .seat-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; align-items: start; gap: 24px; }
 
-.reservation-clock { display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255, 104, 72, .2); border-radius: 12px; padding: 10px 14px; background: #fff0e9; }
+.reservation-clock { display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255, 107, 53, .2); border-radius: 12px; padding: 10px 14px; background: #FFF4ED; }
 
-.reservation-clock__ring { display: grid; width: 33px; height: 33px; place-items: center; border-radius: 50%; color: var(--coral-deep); background: #ffd7ca; }
+.reservation-clock__ring { display: grid; width: 33px; height: 33px; place-items: center; border-radius: 50%; color: var(--coral-deep); background: #FFE3D8; }
 
 .reservation-clock > span:last-child { display: grid; }
 
-.reservation-clock small { color: #977b76; font-size: 7px; font-weight: 700; letter-spacing: .1em; }
+.reservation-clock small { color: #71717A; font-size: 7px; font-weight: 700; letter-spacing: .1em; }
 
-.reservation-clock strong { color: #a74334; font-family: 'Space Grotesk', sans-serif; font-size: 18px; }
+.reservation-clock strong { color: #B91C1C; font-family: 'Outfit', sans-serif; font-size: 18px; }
 
-.seat-tip { display: flex; align-items: flex-start; gap: 8px; margin-top: 16px; color: #8b838a; font-size: 10px; }
+.seat-tip { display: flex; align-items: flex-start; gap: 8px; margin-top: 16px; color: #71717A; font-size: 10px; }
 
 .seat-tip svg { flex: 0 0 auto; color: var(--coral); }
 
