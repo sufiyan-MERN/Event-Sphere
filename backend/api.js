@@ -102,30 +102,6 @@ router.delete('/holds', asyncRoute(async (req, res) => {
   res.json(await releaseHold(holdToken));
 }));
 
-router.get('/admin', asyncRoute(async (req, res) => {
-  const [stats, bookings, catalog, coupons, databases] = await Promise.all([
-    getAdminStats(),
-    getAllBookingsAdmin(),
-    getCatalogFromDb(),
-    getCouponsFromDb(),
-    getDatabaseRegistryInfo(),
-  ]);
-  res.json({
-    ok: true,
-    service: 'showbook-admin-api',
-    persistence: { provider: 'MongoDB Atlas', status: mongoStatus() },
-    databases,
-    stats,
-    bookings,
-    catalog: catalog.items,
-    coupons,
-  });
-}));
-
-router.get('/admin/databases', asyncRoute(async (req, res) => {
-  const databases = await getDatabaseRegistryInfo();
-  res.json(databases);
-}));
 
 
 router.post('/bookings', asyncRoute(async (req, res) => {
@@ -156,25 +132,55 @@ router.delete('/bookings/:id', asyncRoute(async (req, res) => {
   res.json({ booking: await cancelBooking(req.params.id, token) });
 }));
 
-// --- ADMIN CONTROL ENDPOINTS ---
+// --- ADMIN CONTROL ENDPOINTS (DYNAMIC ROUTE SUPPORT) ---
 
-router.get('/admin/stats', asyncRoute(async (req, res) => {
+const rawAdminRoute = process.env.ADMIN_ROUTE || process.env.VITE_ADMIN_ROUTE || '/admin';
+const dynamicAdminRoute = (rawAdminRoute.startsWith('/') ? rawAdminRoute : `/${rawAdminRoute}`).replace(/\/+$/, '') || '/admin';
+
+const adminRouter = Router();
+
+adminRouter.get('/', asyncRoute(async (req, res) => {
+  const [stats, bookings, catalog, coupons, databases] = await Promise.all([
+    getAdminStats(),
+    getAllBookingsAdmin(),
+    getCatalogFromDb(),
+    getCouponsFromDb(),
+    getDatabaseRegistryInfo(),
+  ]);
+  res.json({
+    ok: true,
+    service: 'showbook-admin-api',
+    persistence: { provider: 'MongoDB Atlas', status: mongoStatus() },
+    databases,
+    stats,
+    bookings,
+    catalog: catalog.items,
+    coupons,
+  });
+}));
+
+adminRouter.get('/databases', asyncRoute(async (req, res) => {
+  const databases = await getDatabaseRegistryInfo();
+  res.json(databases);
+}));
+
+adminRouter.get('/stats', asyncRoute(async (req, res) => {
   const stats = await getAdminStats();
   res.json({ stats });
 }));
 
-router.get('/admin/bookings', asyncRoute(async (req, res) => {
+adminRouter.get('/bookings', asyncRoute(async (req, res) => {
   const bookings = await getAllBookingsAdmin();
   res.json({ bookings });
 }));
 
-router.put('/admin/bookings/:id/status', asyncRoute(async (req, res) => {
+adminRouter.put('/bookings/:id/status', asyncRoute(async (req, res) => {
   const { status } = req.body;
   const updated = await updateBookingStatusAdmin(req.params.id, status);
   res.json({ booking: updated });
 }));
 
-router.get('/admin/seats', asyncRoute(async (req, res) => {
+adminRouter.get('/seats', asyncRoute(async (req, res) => {
   const { itemId, date, time } = req.query;
   if (!itemId || !date || !time) {
     throw new ApiError(400, 'missing_params', 'itemId, date, and time are required.');
@@ -183,12 +189,23 @@ router.get('/admin/seats', asyncRoute(async (req, res) => {
   res.json(result);
 }));
 
-router.post('/admin/seats/lock', asyncRoute(async (req, res) => {
+adminRouter.post('/seats/lock', asyncRoute(async (req, res) => {
   const { showKey, seatId, locked } = req.body;
   if (!showKey || !seatId) throw new ApiError(400, 'missing_fields', 'showKey and seatId are required.');
   const result = await toggleSeatLockAdmin({ showKey, seatId, locked: Boolean(locked) });
   res.json(result);
 }));
+
+adminRouter.post('/seed-reset', asyncRoute(async (req, res) => {
+  const result = await resetDatabaseSeed();
+  res.json(result);
+}));
+
+// Mount on standard '/admin' and any dynamic custom admin route specified in .env
+router.use('/admin', adminRouter);
+if (dynamicAdminRoute !== '/admin') {
+  router.use(dynamicAdminRoute, adminRouter);
+}
 
 router.get('/coupons', asyncRoute(async (req, res) => {
   const coupons = await getCouponsFromDb();
@@ -205,9 +222,6 @@ router.put('/coupons/:code/toggle', asyncRoute(async (req, res) => {
   res.json({ coupon });
 }));
 
-router.post('/admin/seed-reset', asyncRoute(async (req, res) => {
-  const result = await resetDatabaseSeed();
-  res.json(result);
-}));
+
 
 export default router;

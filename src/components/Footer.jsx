@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ADMIN_ROUTE } from "../utils/routes.js";
 import "../styles/components/Footer.css";
 
 export default function Footer() {
@@ -33,7 +34,7 @@ export default function Footer() {
           <strong>Your ShowBook</strong>
           <Link to="/bookings">My bookings</Link>
           <Link to="/profile">Profile</Link>
-          <Link to="/admin">Admin Panel</Link>
+          <Link to={ADMIN_ROUTE}>Admin Panel</Link>
           <Link to="/events?category=Workshops">Things to try</Link>
         </div>
         <div className="footer-note">

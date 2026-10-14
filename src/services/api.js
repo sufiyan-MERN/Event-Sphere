@@ -1,5 +1,6 @@
 import { allItems as defaultAllItems, offers as defaultOffers, seedBookings } from '../data/content.js';
 import { seatRows, unavailableSeats } from '../data/seats.js';
+import { ADMIN_ROUTE } from '../utils/routes.js';
 
 export class ApiClientError extends Error {
   constructor(status, code, message) {
@@ -11,6 +12,7 @@ export class ApiClientError extends Error {
 }
 
 const API_BASE = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) || '';
+const ADMIN_API_BASE = `/api${ADMIN_ROUTE}`;
 
 // Local fallback store keys
 const LOCAL_CATALOG_KEY = 'showbook_db_catalog';
@@ -199,7 +201,7 @@ export const cancelBooking = (id, token) => request(`/api/bookings/${encodeURICo
 // Admin Control APIs
 export const getAdminStats = async () => {
   try {
-    return await request('/api/admin/stats');
+    return await request(`${ADMIN_API_BASE}/stats`);
   } catch {
     const bookings = getLocalStore(LOCAL_BOOKINGS_KEY, seedBookings);
     const catalog = getLocalStore(LOCAL_CATALOG_KEY, defaultAllItems);
@@ -263,7 +265,7 @@ export const getAdminStats = async () => {
 
 export const getAdminBookings = async () => {
   try {
-    return await request('/api/admin/bookings');
+    return await request(`${ADMIN_API_BASE}/bookings`);
   } catch {
     const bookings = getLocalStore(LOCAL_BOOKINGS_KEY, seedBookings);
     return { bookings };
@@ -272,7 +274,7 @@ export const getAdminBookings = async () => {
 
 export const updateBookingStatusAdmin = async (id, status) => {
   try {
-    return await request(`/api/admin/bookings/${encodeURIComponent(id)}/status`, {
+    return await request(`${ADMIN_API_BASE}/bookings/${encodeURIComponent(id)}/status`, {
       method: 'PUT',
       body: jsonBody({ status }),
     });
@@ -287,7 +289,7 @@ export const updateBookingStatusAdmin = async (id, status) => {
 export const getAdminSeats = async ({ itemId, date, time }) => {
   try {
     const query = new URLSearchParams({ itemId, date, time });
-    return await request(`/api/admin/seats?${query}`);
+    return await request(`${ADMIN_API_BASE}/seats?${query}`);
   } catch {
     const items = getLocalStore(LOCAL_CATALOG_KEY, defaultAllItems);
     const item = items.find((i) => i.id === itemId) || defaultAllItems[0];
@@ -315,7 +317,7 @@ export const getAdminSeats = async ({ itemId, date, time }) => {
 
 export const toggleSeatLockAdmin = async ({ showKey, seatId, locked }) => {
   try {
-    return await request('/api/admin/seats/lock', {
+    return await request(`${ADMIN_API_BASE}/seats/lock`, {
       method: 'POST',
       body: jsonBody({ showKey, seatId, locked }),
     });
@@ -371,7 +373,7 @@ export const toggleCoupon = async (code) => {
 
 export const resetDatabaseSeed = async () => {
   try {
-    return await request('/api/admin/seed-reset', { method: 'POST' });
+    return await request(`${ADMIN_API_BASE}/seed-reset`, { method: 'POST' });
   } catch {
     setLocalStore(LOCAL_CATALOG_KEY, defaultAllItems);
     setLocalStore(LOCAL_COUPONS_KEY, defaultOffers);
@@ -382,7 +384,7 @@ export const resetDatabaseSeed = async () => {
 
 export const getAdminDatabases = async () => {
   try {
-    return await request('/api/admin/databases');
+    return await request(`${ADMIN_API_BASE}/databases`);
   } catch {
     const catalog = getLocalStore(LOCAL_CATALOG_KEY, defaultAllItems);
     const coupons = getLocalStore(LOCAL_COUPONS_KEY, defaultOffers);
@@ -405,7 +407,7 @@ export const getAdminDatabases = async () => {
 
 export const getAdminFull = async () => {
   try {
-    return await request('/api/admin');
+    return await request(ADMIN_API_BASE);
   } catch {
     const catalog = getLocalStore(LOCAL_CATALOG_KEY, defaultAllItems);
     const coupons = getLocalStore(LOCAL_COUPONS_KEY, defaultOffers);
