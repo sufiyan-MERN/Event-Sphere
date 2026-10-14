@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { allItems, events, movies } from "../data/content.js";
 import { useBooking } from "../context/BookingContext.jsx";
 import { MediaCard } from "../components/MediaCard.jsx";
 import { EmptyState } from "../components/EmptyState.jsx";
@@ -38,7 +37,7 @@ function FilterSelect({ label, value, onChange, options, className = "" }) {
 function CatalogPage({ type }) {
   const isMovies = type === "movies";
   const [searchParams, setSearchParams] = useSearchParams();
-  const { location, setLocation } = useBooking();
+  const { location, setLocation, allItems, movies, events } = useBooking();
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [category, setCategory] = useState(searchParams.get("category") || "");
   const [genre, setGenre] = useState("");

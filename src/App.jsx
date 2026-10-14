@@ -12,6 +12,7 @@ import { BookingSuccessPage, BookingDetailPage, BookingsPage } from './pages/Boo
 import ProfilePage from './pages/ProfilePage.jsx';
 import AuthPage from './pages/AuthPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
+import AdminPage from './pages/AdminPage.jsx';
 import { useBooking } from './context/BookingContext.jsx';
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
     <Route path="/bookings" element={<BookingsPage />} />
     <Route path="/bookings/:id" element={<BookingDetailPage />} />
     <Route path="/profile" element={<ProfilePage />} />
+    <Route path="/admin" element={<AdminPage />} />
     <Route path="/login" element={<AuthPage mode="login" />} />
     <Route path="/register" element={<AuthPage mode="register" />} />
     <Route path="/show/:id" element={<Navigate to="/events" replace />} />

@@ -12,6 +12,7 @@
     { "path": "/bookings", "title": "My bookings" },
     { "path": "/bookings/:id", "title": "Booking details" },
     { "path": "/profile", "title": "Profile" },
+    { "path": "/admin", "title": "Admin Control Center" },
     { "path": "/login", "title": "Login" },
     { "path": "/register", "title": "Register" }
   ]

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getItem } from "../data/content.js";
 import { useBooking } from "../context/BookingContext.jsx";
 import { formatLongDate, money } from "../utils/format.js";
 import {
@@ -13,15 +12,17 @@ import "../styles/pages/DetailPage.css";
 
 export default function DetailPage({ kind }) {
   const { id } = useParams();
+  const { getItem, beginBooking, favorites, toggleFavorite } = useBooking();
   const item = getItem(id);
   const [date, setDate] = useState(item?.date || "2026-10-10");
   const [show, setShow] = useState(item?.time || "7:30 PM");
   useEffect(() => {
-    setDate(item?.date || "2026-10-10");
-    setShow(item?.time || "7:30 PM");
-  }, [id, item?.date, item?.time]);
+    if (item) {
+      setDate(item.date || "2026-10-10");
+      setShow(item.time || "7:30 PM");
+    }
+  }, [id, item]);
   const navigate = useNavigate();
-  const { beginBooking, favorites, toggleFavorite } = useBooking();
   const matchingKind = useMemo(() => item && item.kind === kind, [item, kind]);
 
   if (!item || !matchingKind)

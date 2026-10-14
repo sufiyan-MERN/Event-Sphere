@@ -18,14 +18,25 @@ export default function PaymentPage() {
 
   useEffect(() => {
     if (state !== 'processing') return undefined;
-    const timer = window.setTimeout(() => {
-      const booking = confirmBooking(pricing);
-      if (booking) {
-        showToast('Payment successful. Your night is booked.');
-        navigate('/booking/success', { state: { booking } });
-      } else setState('failed');
+    let isMounted = true;
+    const timer = window.setTimeout(async () => {
+      try {
+        const booking = await confirmBooking(pricing);
+        if (!isMounted) return;
+        if (booking) {
+          showToast('Payment successful. Your night is booked.');
+          navigate('/booking/success', { state: { booking } });
+        } else {
+          setState('failed');
+        }
+      } catch (err) {
+        if (isMounted) setState('failed');
+      }
     }, 1500);
-    return () => window.clearTimeout(timer);
+    return () => {
+      isMounted = false;
+      window.clearTimeout(timer);
+    };
   }, [state, confirmBooking, pricing, navigate, showToast]);
 
   if (!item || !draft.selectedSeats.length) return <main className="page-shell page-state"><EmptyState title="No payment due yet" detail="Select your show and seats before continuing." action="Explore events" onAction={() => navigate('/events')} /></main>;

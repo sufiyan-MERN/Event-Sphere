@@ -6,8 +6,16 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getItem, seedBookings } from "../data/content.js";
+import { allItems as staticAllItems, events as staticEvents, movies as staticMovies, getItem as staticGetItem, seedBookings } from "../data/content.js";
 import { readStored, STORAGE_KEYS, writeStored } from "../utils/storage.js";
+import {
+  getHealth,
+  getCatalog,
+  createSeatHold,
+  createBooking as apiCreateBooking,
+  cancelBooking as apiCancelBooking,
+  getAdminBookings,
+} from "../services/api.js";
 
 const defaultProfile = {
   name: "Aarav Mehta",
@@ -56,6 +64,56 @@ export function BookingProvider({ children }) {
     readStored(STORAGE_KEYS.activeBooking, defaultDraft),
   );
   const [toast, setToast] = useState(null);
+  const [backendHealth, setBackendHealth] = useState({ online: false, persistence: null });
+
+  // MongoDB synced Catalog state
+  const [catalogItems, setCatalogItems] = useState(staticAllItems);
+  const [catalogLoading, setCatalogLoading] = useState(false);
+  const [lastSynced, setLastSynced] = useState(null);
+
+  // Fetch catalog from MongoDB
+  const refreshCatalog = useCallback(async () => {
+    setCatalogLoading(true);
+    try {
+      const data = await getCatalog();
+      if (Array.isArray(data?.items) && data.items.length > 0) {
+        setCatalogItems(data.items);
+        setLastSynced(new Date());
+      }
+    } catch (err) {
+      console.warn("[ShowBook] Failed to fetch catalog from MongoDB:", err.message);
+    } finally {
+      setCatalogLoading(false);
+    }
+  }, []);
+
+  // Sync health and catalog on startup
+  useEffect(() => {
+    getHealth()
+      .then((res) => {
+        if (res?.ok) {
+          setBackendHealth({ online: true, persistence: res.persistence });
+        }
+      })
+      .catch(() => {
+        setBackendHealth({ online: false, persistence: null });
+      });
+
+    refreshCatalog();
+
+    // Also attempt to sync bookings from MongoDB
+    getAdminBookings()
+      .then((res) => {
+        if (Array.isArray(res?.bookings) && res.bookings.length > 0) {
+          setBookings((current) => {
+            const currentIds = new Set(current.map((b) => b.id));
+            const newFromDb = res.bookings.filter((b) => !currentIds.has(b.id));
+            return [...current, ...newFromDb];
+          });
+        }
+      })
+      .catch(() => {});
+  }, [refreshCatalog]);
 
   useEffect(() => {
     writeStored(STORAGE_KEYS.location, location);
@@ -98,6 +156,24 @@ export function BookingProvider({ children }) {
   );
   const signIn = useCallback(() => setIsAuthenticated(true), []);
   const signOut = useCallback(() => setIsAuthenticated(false), []);
+
+  const movies = useMemo(
+    () => catalogItems.filter((item) => item.kind === "movie"),
+    [catalogItems]
+  );
+  const events = useMemo(
+    () => catalogItems.filter((item) => item.kind === "event"),
+    [catalogItems]
+  );
+
+  const getItem = useCallback(
+    (id) => {
+      const found = catalogItems.find((item) => item.id === id);
+      if (found) return found;
+      return staticGetItem(id);
+    },
+    [catalogItems]
+  );
 
   const beginBooking = useCallback(
     (item, date = item?.date, show = item?.time) => {
@@ -152,7 +228,7 @@ export function BookingProvider({ children }) {
   );
 
   const confirmBooking = useCallback(
-    (pricing) => {
+    async (pricing) => {
       const item = getItem(draft.itemId);
       if (!item || !draft.selectedSeats.length) return null;
       const now = new Date();
@@ -161,7 +237,8 @@ export function BookingProvider({ children }) {
         bookings.filter((booking) => booking.id.startsWith(`BK${day}`)).length +
           1,
       ).padStart(3, "0");
-      const booking = {
+
+      let booking = {
         id: `BK${day}${sequence}`,
         itemId: item.id,
         title: item.title,
@@ -186,6 +263,44 @@ export function BookingProvider({ children }) {
         coupon: draft.coupon,
         bookedAt: now.toISOString(),
       };
+
+      // Connect to Express/MongoDB backend if online
+      try {
+        let holdToken = draft.holdToken;
+        if (!holdToken) {
+          const holdRes = await createSeatHold({
+            itemId: draft.itemId,
+            date: draft.date,
+            time: draft.show,
+            seatIds: draft.selectedSeats.map((seat) => seat.id),
+          });
+          if (holdRes?.holdToken) holdToken = holdRes.holdToken;
+        }
+
+        if (holdToken) {
+          const apiRes = await apiCreateBooking({
+            holdToken,
+            customer: {
+              name: draft.customer.name,
+              email: draft.customer.email,
+              phone: draft.customer.phone,
+            },
+            coupon: draft.coupon,
+            paymentMethod: draft.paymentMethod,
+          });
+
+          if (apiRes?.booking) {
+            booking = {
+              ...booking,
+              ...apiRes.booking,
+              accessToken: apiRes.bookingAccessToken,
+            };
+          }
+        }
+      } catch (err) {
+        console.warn("[ShowBook API] Local fallback used for booking creation:", err.message);
+      }
+
       setBookings((current) => [booking, ...current]);
       setLastConfirmedBookingId(booking.id);
       setProfileState((current) => ({
@@ -199,17 +314,23 @@ export function BookingProvider({ children }) {
             .slice(0, 2)
             .toUpperCase() || "AM",
       }));
-      setDraft((current) => ({ ...current, selectedSeats: [] }));
+      setDraft((current) => ({ ...current, selectedSeats: [], holdToken: null }));
       return booking;
     },
-    [bookings, draft],
+    [bookings, draft, getItem],
   );
 
   const updateBookingStatus = useCallback((id, status) => {
     setBookings((current) =>
-      current.map((booking) =>
-        booking.id === id ? { ...booking, status } : booking,
-      ),
+      current.map((booking) => {
+        if (booking.id === id) {
+          if (status === "Cancelled" && booking.accessToken) {
+            apiCancelBooking(booking.id, booking.accessToken).catch(() => {});
+          }
+          return { ...booking, status };
+        }
+        return booking;
+      }),
     );
   }, []);
 
@@ -223,6 +344,7 @@ export function BookingProvider({ children }) {
       signIn,
       signOut,
       bookings,
+      setBookings,
       lastConfirmedBookingId,
       favorites,
       preferences,
@@ -235,6 +357,15 @@ export function BookingProvider({ children }) {
       toggleFavorite,
       confirmBooking,
       updateBookingStatus,
+      backendHealth,
+      catalogItems,
+      movies,
+      events,
+      allItems: catalogItems,
+      getItem,
+      refreshCatalog,
+      catalogLoading,
+      lastSynced,
       toast,
       showToast,
       dismissToast: () => setToast(null),
@@ -248,6 +379,7 @@ export function BookingProvider({ children }) {
       signIn,
       signOut,
       bookings,
+      setBookings,
       lastConfirmedBookingId,
       favorites,
       preferences,
@@ -259,6 +391,14 @@ export function BookingProvider({ children }) {
       toggleFavorite,
       confirmBooking,
       updateBookingStatus,
+      backendHealth,
+      catalogItems,
+      movies,
+      events,
+      getItem,
+      refreshCatalog,
+      catalogLoading,
+      lastSynced,
       toast,
       showToast,
     ],

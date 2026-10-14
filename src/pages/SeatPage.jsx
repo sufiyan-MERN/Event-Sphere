@@ -2,18 +2,18 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import SeatMap from '../components/SeatMap.jsx';
 import BookingSummary from '../components/BookingSummary.jsx';
-import { getItem } from '../data/content.js';
 import { useBooking } from '../context/BookingContext.jsx';
 import { formatLongDate } from '../utils/format.js';
 import Icon from '../components/Icon.jsx';
 import { EmptyState } from '../components/EmptyState.jsx';
+import { createSeatHold } from '../services/api.js';
 import '../styles/pages/SeatPage.css';
 
 export default function SeatPage() {
   const { id } = useParams();
+  const { draft, updateDraft, beginBooking, toggleSeat, clearSeats, showToast, getItem } = useBooking();
   const item = getItem(id);
   const navigate = useNavigate();
-  const { draft, beginBooking, toggleSeat, clearSeats, showToast } = useBooking();
   const selectedSeats = draft.itemId === id ? draft.selectedSeats : [];
   const [seconds, setSeconds] = useState(300);
   const deadline = useRef(null);
@@ -48,7 +48,23 @@ export default function SeatPage() {
   return <main className="page-shell seat-page">
     <div className="flow-breadcrumb"><Link to="/events">Events</Link><span>/</span><Link to={`/${item.kind === 'movie' ? 'movies' : 'events'}/${item.id}`}>{item.title}</Link><span>/</span><strong>Choose seats</strong></div>
     <div className="seat-page-heading"><div><span className="eyebrow">THE BEST PART IS YOURS</span><h1>Pick your <em>perfect seat.</em></h1><p>{item.title} · {formatLongDate(draft.date)} · {draft.show}</p></div>{selectedSeats.length > 0 && <div className="reservation-clock"><span className="reservation-clock__ring"><Icon name="clock" size={17} /></span><span><small>SEATS RESERVED FOR</small><strong>{minutes}:{secs}</strong></span></div>}</div>
-    <div className="seat-layout"><section className="seat-map-panel"><div className="seat-map-panel__top"><span className="eyebrow">{item.venue}</span><span>Tap seats to choose your view</span></div><SeatMap selectedSeats={selectedSeats} onToggle={toggleSeat} /></section><BookingSummary item={{ ...item, dateLabel: formatLongDate(draft.date), showLabel: draft.show }} seats={selectedSeats} onContinue={() => navigate('/checkout')} sticky disabled={!selectedSeats.length} /></div>
+    <div className="seat-layout"><section className="seat-map-panel"><div className="seat-map-panel__top"><span className="eyebrow">{item.venue}</span><span>Tap seats to choose your view</span></div><SeatMap selectedSeats={selectedSeats} onToggle={toggleSeat} /></section><BookingSummary item={{ ...item, dateLabel: formatLongDate(draft.date), showLabel: draft.show }} seats={selectedSeats} onContinue={async () => {
+      if (selectedSeats.length) {
+        try {
+          const res = await createSeatHold({
+            itemId: draft.itemId,
+            date: draft.date,
+            time: draft.show,
+            seatIds: selectedSeats.map((s) => s.id),
+            holdToken: draft.holdToken || '',
+          });
+          if (res?.holdToken) updateDraft({ holdToken: res.holdToken });
+        } catch {
+          // Gracefully continue locally if offline
+        }
+      }
+      navigate('/checkout');
+    }} sticky disabled={!selectedSeats.length} /></div>
     <div className="seat-tip"><Icon name="spark" size={16} /><span>Seats are held for five minutes while you check out. Your real seat booking is simulated for this demo.</span></div>
   </main>;
 }

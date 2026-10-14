@@ -10,7 +10,7 @@ const routeFor = (item) =>
   `/${item.kind === "movie" ? "movies" : "events"}/${item.id}`;
 
 export default function Navbar() {
-  const { location, setLocation, profile, isAuthenticated } = useBooking();
+  const { location, setLocation, profile, isAuthenticated, backendHealth } = useBooking();
   const [menuOpen, setMenuOpen] = useState(false);
   const [cityOpen, setCityOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -91,10 +91,6 @@ export default function Navbar() {
     { label: "Home", to: "/" },
     { label: "Movies", to: "/movies" },
     { label: "Events", to: "/events" },
-    // { label: "Sports", to: "/events?category=Sports" },
-    // { label: "Concerts", to: "/events?category=Concerts" },
-    // { label: "Comedy", to: "/events?category=Comedy" },
-    // { label: "Login", to: "/login" },
   ];
 
   const submitSearch = (event) => {
@@ -125,6 +121,19 @@ export default function Navbar() {
             show<span>book</span>
             <i>.</i>
           </span>
+          <span
+            style={{
+              display: "inline-block",
+              width: "7px",
+              height: "7px",
+              borderRadius: "50%",
+              backgroundColor: backendHealth?.online ? "#10b981" : "#f59e0b",
+              marginLeft: "4px",
+              boxShadow: backendHealth?.online ? "0 0 6px #10b981" : "none",
+              alignSelf: "center",
+            }}
+            title={backendHealth?.online ? `API Connected (${backendHealth?.persistence?.status || "Ready"})` : "API Offline (using resilient local mock)"}
+          />
         </Link>
         <nav
           className={`primary-nav ${menuOpen ? "primary-nav--open" : ""}`}
@@ -140,23 +149,9 @@ export default function Navbar() {
                 `nav-link ${isActive ? "nav-link--active" : ""}`
               }
             >
-              {item.label}
+              <span>{item.label}</span>
             </NavLink>
           ))}
-          {/* <NavLink
-            to="/events?category=Theatre"
-            onClick={() => setMenuOpen(false)}
-            className="nav-link nav-link--extra"
-          >
-            Theatre
-          </NavLink> */}
-          {/* <NavLink
-            to="/events?category=Workshops"
-            onClick={() => setMenuOpen(false)}
-            className="nav-link nav-link--extra"
-          >
-            Workshops
-          </NavLink> */}
           <div className="mobile-nav-extra">
             <Link to="/bookings" onClick={() => setMenuOpen(false)}>
               My bookings

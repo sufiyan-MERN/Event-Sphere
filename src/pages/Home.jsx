@@ -4,7 +4,7 @@ import HeroCarousel from '../components/HeroCarousel.jsx';
 import CategoryRail from '../components/CategoryRail.jsx';
 import { MediaCard, MiniMovieCard } from '../components/MediaCard.jsx';
 import { SectionHeading } from '../components/CategoryRail.jsx';
-import { events, movies, offers } from '../data/content.js';
+import { offers } from '../data/content.js';
 import { useBooking } from '../context/BookingContext.jsx';
 import Icon from '../components/Icon.jsx';
 import { EmptyState, LoadingSkeleton } from '../components/EmptyState.jsx';
@@ -12,7 +12,7 @@ import '../styles/pages/Home.css';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const { location, setLocation, showToast, updateDraft } = useBooking();
+  const { location, setLocation, showToast, updateDraft, movies, events } = useBooking();
   const navigate = useNavigate();
   useEffect(() => {
     const timer = window.setTimeout(() => setLoading(false), 380);
