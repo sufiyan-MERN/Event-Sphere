@@ -139,6 +139,29 @@
   transform: translateY(-4px);
 }
 
+/* A soft orange highlight draws itself across the top edge on hover. */
+.media-card::before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--coral), transparent);
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.3);
+  transition:
+    opacity 0.3s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.media-card:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
 .media-card__image-link {
   position: relative;
   display: block;
@@ -224,6 +247,10 @@
   transform: scale(1.07);
 }
 
+.favorite-button:active {
+  animation: heart-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .favorite-button--active {
   color: white;
   background: var(--coral);
@@ -231,6 +258,28 @@
 
 .favorite-button--active svg {
   fill: currentColor;
+}
+
+/* Filled heart pops a little ring when it is saved. */
+.favorite-button--active::after {
+  position: absolute;
+  inset: -1px;
+  border: 1px solid rgba(255, 107, 53, 0.6);
+  border-radius: 50%;
+  content: "";
+  animation: fav-ring 0.55s ease-out;
+  pointer-events: none;
+}
+
+@keyframes fav-ring {
+  from {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.7);
+  }
 }
 
 .media-card__body {
@@ -299,6 +348,35 @@
 .media-card__arrow:hover {
   color: white;
   background: var(--coral);
+}
+
+.media-card__arrow svg {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.media-card__arrow:hover svg {
+  transform: translateX(2px);
+}
+
+.media-card__title {
+  transition: color 0.2s ease;
+}
+
+.media-card:hover .media-card__title {
+  color: var(--coral-deep);
+}
+
+/* Dark band cards keep a light title, just warmed up on hover. */
+.media-grid--featured .media-card:hover .media-card__title {
+  color: #ffe3d8;
+}
+
+.mini-movie-card__book svg {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mini-movie-card:hover .mini-movie-card__book svg {
+  transform: translateX(3px);
 }
 
 .catalog-results .media-grid {

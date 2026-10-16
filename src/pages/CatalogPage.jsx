@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useBooking } from "../context/BookingContext.jsx";
 import { MediaCard } from "../components/MediaCard.jsx";
-import { EmptyState } from "../components/EmptyState.jsx";
+import { EmptyState, LoadingSkeleton } from "../components/EmptyState.jsx";
 import SearchBar from "../components/SearchBar.jsx";
 import CategoryRail from "../components/CategoryRail.jsx";
 import FilterPanel from "../components/FilterPanel.jsx";
@@ -37,7 +37,7 @@ function FilterSelect({ label, value, onChange, options, className = "" }) {
 function CatalogPage({ type }) {
   const isMovies = type === "movies";
   const [searchParams, setSearchParams] = useSearchParams();
-  const { location, setLocation, allItems, movies, events } = useBooking();
+  const { location, setLocation, allItems, movies, events, catalogLoading } = useBooking();
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [category, setCategory] = useState(searchParams.get("category") || "");
   const [genre, setGenre] = useState("");
@@ -328,19 +328,30 @@ function CatalogPage({ type }) {
         <section className="catalog-results" aria-live="polite">
           <div className="catalog-results__heading">
             <span>
-              {results.length
-                ? `Showing ${results.length} ${results.length === 1 ? "experience" : "experiences"}`
-                : "A little quiet here"}
+              {catalogLoading && !results.length
+                ? "Gathering what’s on…"
+                : results.length
+                  ? `Showing ${results.length} ${results.length === 1 ? "experience" : "experiences"}`
+                  : "A little quiet here"}
             </span>
             <span className="catalog-results__city">
               <Icon name="pin" size={14} />
               {city}
             </span>
           </div>
-          {results.length ? (
+          {catalogLoading && !results.length ? (
+            <LoadingSkeleton
+              count={6}
+              label={`Loading ${isMovies ? "movies" : "events"}`}
+            />
+          ) : results.length ? (
             <div className="media-grid">
-              {results.map((item) => (
-                <MediaCard item={item} key={item.id} />
+              {results.map((item, index) => (
+                <MediaCard
+                  item={item}
+                  key={item.id}
+                  revealDelay={Math.min(index, 7) * 70}
+                />
               ))}
             </div>
           ) : (

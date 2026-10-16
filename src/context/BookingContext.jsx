@@ -69,11 +69,13 @@ export function BookingProvider({ children }) {
   // MongoDB synced Catalog state
   const [catalogItems, setCatalogItems] = useState(staticAllItems);
   const [catalogLoading, setCatalogLoading] = useState(false);
+  const [catalogError, setCatalogError] = useState(null);
   const [lastSynced, setLastSynced] = useState(null);
 
   // Fetch catalog from MongoDB
   const refreshCatalog = useCallback(async () => {
     setCatalogLoading(true);
+    setCatalogError(null);
     try {
       const data = await getCatalog();
       if (Array.isArray(data?.items) && data.items.length > 0) {
@@ -81,6 +83,7 @@ export function BookingProvider({ children }) {
         setLastSynced(new Date());
       }
     } catch (err) {
+      setCatalogError(err?.message || "Catalogue unavailable");
       console.warn("[ShowBook] Failed to fetch catalog from MongoDB:", err.message);
     } finally {
       setCatalogLoading(false);
@@ -365,6 +368,7 @@ export function BookingProvider({ children }) {
       getItem,
       refreshCatalog,
       catalogLoading,
+      catalogError,
       lastSynced,
       toast,
       showToast,
@@ -398,6 +402,7 @@ export function BookingProvider({ children }) {
       getItem,
       refreshCatalog,
       catalogLoading,
+      catalogError,
       lastSynced,
       toast,
       showToast,

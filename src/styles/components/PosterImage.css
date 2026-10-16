@@ -1,0 +1,40 @@
+/* Shimmer placeholder + fade-in for every poster/photo on the site. */
+
+.poster-media {
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    #f1f1f3 25%,
+    #f8f8f9 50%,
+    #f1f1f3 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease infinite;
+  transition: opacity 0.55s ease;
+}
+
+.poster-media.is-ready {
+  opacity: 1;
+  background: none;
+  animation: none;
+}
+
+.poster-fallback {
+  display: grid;
+  place-items: center;
+  color: rgba(255, 107, 53, 0.55);
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255, 107, 53, 0.16),
+      transparent 62%
+    ),
+    #f4f4f5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster-media {
+    animation: none;
+    opacity: 1;
+  }
+}

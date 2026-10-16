@@ -18,6 +18,8 @@ export default function CategoryRail({ compact = false }) {
             className={`category-card category-card--${category.tone}`}
             to={to}
             key={category.label}
+            data-reveal
+            style={{ "--reveal-delay": `${index * 45}ms` }}
           >
             <span className="category-card__number">0{index + 1}</span>
             <span className="category-card__icon">{category.icon}</span>
@@ -38,7 +40,7 @@ export function SectionHeading({
   action = "See all",
 }) {
   return (
-    <div className="section-heading">
+    <div className="section-heading" data-reveal>
       <div>
         <span className="eyebrow">{eyebrow}</span>
         <h2>{title}</h2>

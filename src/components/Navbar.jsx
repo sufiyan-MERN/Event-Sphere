@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { allItems } from "../data/content.js";
 import { useBooking } from "../context/BookingContext.jsx";
@@ -10,12 +10,13 @@ const routeFor = (item) =>
   `/${item.kind === "movie" ? "movies" : "events"}/${item.id}`;
 
 export default function Navbar() {
-  const { location, setLocation, profile, isAuthenticated, backendHealth } = useBooking();
+  const { location, setLocation, profile, isAuthenticated, backendHealth, showToast } = useBooking();
   const [menuOpen, setMenuOpen] = useState(false);
   const [cityOpen, setCityOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [query, setQuery] = useState("");
+  const progressRef = useRef(null);
   const navigate = useNavigate();
 
   // Compact floating navbar once the page is scrolled past the hero threshold.
@@ -36,6 +37,16 @@ export default function Navbar() {
         fallback = 0;
       }
       setScrolled(window.scrollY > 24);
+
+      // Reading-progress hairline. Written straight to the DOM so scrolling
+      // never triggers a React render.
+      const node = progressRef.current;
+      if (node) {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - doc.clientHeight;
+        const ratio = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+        node.style.transform = `scaleX(${ratio})`;
+      }
     };
     const onScroll = () => {
       if (frame) return;
@@ -196,6 +207,9 @@ export default function Navbar() {
                       onClick={() => {
                         setLocation(city);
                         setCityOpen(false);
+                        if (city !== location) {
+                          showToast(`Now showing what’s on in ${city}.`);
+                        }
                       }}
                     >
                       {city}
@@ -314,6 +328,7 @@ export default function Navbar() {
         onClick={() => setMenuOpen(false)}
         aria-hidden="true"
       />
+      <span className="nav-progress" ref={progressRef} aria-hidden="true" />
     </header>
   );
 }

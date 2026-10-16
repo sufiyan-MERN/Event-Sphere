@@ -1,0 +1,338 @@
+/* ==========================================================================
+   ShowBook — cinematic loader
+   Warm cream field, one slow orange bloom, the brand mark drawing itself in,
+   a slim progress rail and the promise line. Exits with a soft focus pull.
+   ========================================================================== */
+
+.loader {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      120% 90% at 50% 6%,
+      #fff8ee 0%,
+      #f6ebcd 52%,
+      #e7e1aa 100%
+    );
+  transition: opacity 0.5s ease;
+}
+
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+  height: 100%;
+}
+
+/* Backdrop ---------------------------------------------------------------- */
+
+.loader__backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.loader__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(52px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.loader__orb--1 {
+  top: -12%;
+  left: 8%;
+  width: 44vw;
+  height: 44vw;
+  max-width: 520px;
+  max-height: 520px;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.5), transparent 68%);
+  animation: drift 15s ease-in-out infinite;
+}
+
+.loader__orb--2 {
+  right: 4%;
+  bottom: -18%;
+  width: 40vw;
+  height: 40vw;
+  max-width: 480px;
+  max-height: 480px;
+  background: radial-gradient(circle, rgba(255, 164, 110, 0.55), transparent 70%);
+  animation: drift 19s ease-in-out infinite reverse;
+}
+
+.loader__orb--3 {
+  top: 44%;
+  left: 56%;
+  width: 24vw;
+  height: 24vw;
+  max-width: 300px;
+  max-height: 300px;
+  background: radial-gradient(circle, rgba(244, 81, 30, 0.32), transparent 72%);
+  animation: drift 13s ease-in-out infinite 1.2s;
+}
+
+/* Slow spotlight sweep keeps the field alive without being busy. */
+.loader__halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(150vw, 1500px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0) 0deg,
+    rgba(255, 183, 140, 0.22) 60deg,
+    rgba(255, 255, 255, 0) 130deg,
+    rgba(255, 255, 255, 0) 250deg,
+    rgba(255, 170, 120, 0.16) 310deg,
+    rgba(255, 255, 255, 0) 360deg
+  );
+  opacity: 0.9;
+  transform: translate(-50%, -50%);
+  animation: spin-slow 14s linear infinite;
+  mask-image: radial-gradient(circle, #000 8%, transparent 62%);
+  -webkit-mask-image: radial-gradient(circle, #000 8%, transparent 62%);
+}
+
+.loader__grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(24, 24, 27, 0.055) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
+  opacity: 0.55;
+}
+
+/* Centre stack ------------------------------------------------------------ */
+
+.loader__center {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 0 24px;
+  text-align: center;
+  transition:
+    opacity 0.45s ease,
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.55s ease;
+}
+
+.loader__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.loader__mark {
+  width: 46px;
+  height: 48px;
+  gap: 3px;
+  border-radius: 14px 14px 12px 6px;
+  box-shadow: 0 14px 30px rgba(255, 107, 53, 0.34);
+  animation: loader-mark-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.loader__mark span {
+  width: 5px;
+}
+
+.loader__mark span:nth-child(1) { height: 19px; }
+.loader__mark span:nth-child(2) { height: 28px; }
+.loader__mark span:nth-child(3) { height: 13px; }
+
+.loader__mark::after {
+  top: 7px;
+  right: -5px;
+  width: 15px;
+  height: 15px;
+}
+
+.loader__word {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  padding-right: 2px;
+  color: var(--ink);
+  font-family: "Outfit", "DM Sans", sans-serif;
+  font-size: clamp(34px, 8vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.075em;
+  line-height: 1.1;
+  animation: loader-word-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+
+.loader__word > span {
+  font-weight: 500;
+}
+
+.loader__word i {
+  color: var(--orange);
+  font-style: normal;
+  animation: soft-pulse 1.6s ease-in-out 1s infinite;
+}
+
+/* Progress rail */
+
+.loader__bar {
+  position: relative;
+  width: min(228px, 58vw);
+  height: 3px;
+  margin-top: 30px;
+  overflow: hidden;
+  border-radius: 99px;
+}
+
+.loader__bar-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  background: rgba(24, 24, 27, 0.1);
+}
+
+.loader__bar-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--orange), #ffa46e);
+  box-shadow: 0 0 14px rgba(255, 107, 53, 0.45);
+  transform: scaleX(0.06);
+  transform-origin: left center;
+  animation: loader-fill 1.7s cubic-bezier(0.25, 0.8, 0.3, 1) forwards;
+}
+
+.loader__tagline {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  margin: 20px 0 0;
+  color: #6b5f45;
+  font-size: clamp(11px, 2.6vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  animation: loader-tagline-in 0.7s ease 0.4s both;
+}
+
+.loader__ellipsis {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 1px;
+}
+
+.loader__ellipsis i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: soft-pulse 1.2s ease-in-out infinite;
+}
+
+.loader__ellipsis i:nth-child(2) { animation-delay: 0.16s; }
+.loader__ellipsis i:nth-child(3) { animation-delay: 0.32s; }
+
+/* Exit -------------------------------------------------------------------- */
+
+.loader--exiting {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader--exiting .loader__center {
+  opacity: 0;
+  filter: blur(7px);
+  transform: scale(1.05);
+}
+
+.loader--exiting .loader__backdrop {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Completion snap on the rail — no width/animation conflict. */
+.loader--exiting .loader__bar-fill {
+  animation: loader-fill-end 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Keyframes --------------------------------------------------------------- */
+
+@keyframes loader-mark-in {
+  0% {
+    opacity: 0;
+    transform: rotate(-26deg) scale(0.4);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(2deg) scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-5deg) scale(1);
+  }
+}
+
+@keyframes loader-word-in {
+  0% {
+    opacity: 0;
+    transform: translateY(92%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loader-tagline-in {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes loader-fill {
+  from { transform: scaleX(0.06); }
+  to { transform: scaleX(0.92); }
+}
+
+@keyframes loader-fill-end {
+  from { transform: scaleX(0.92); }
+  to { transform: scaleX(1); }
+}
+
+/* Reduced motion ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .loader__orb,
+  .loader__halo,
+  .loader__mark,
+  .loader__word,
+  .loader__word i,
+  .loader__tagline,
+  .loader__ellipsis i {
+    animation: none !important;
+  }
+
+  .loader__bar-fill {
+    animation: none !important;
+    transform: scaleX(1);
+  }
+}
+
+@media print {
+  .loader {
+    display: none !important;
+  }
+}

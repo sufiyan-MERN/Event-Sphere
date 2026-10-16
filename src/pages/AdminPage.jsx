@@ -26,8 +26,10 @@ const PRESET_POSTERS = [
   { label: 'Romance Musical', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0vbZbn40XjQmTUv0D1z2ET-dyN1oFh7MXHyxU_l_ovQ&s=10' },
   { label: 'Sci-Fi Drama', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgGWwCy08Q3B52n0OJXsBfTbeBK89_Nzp4ska7yDFglA&s=10' },
   { label: 'Live Concert', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzs6JUQeDr7EN_XhakGqnpwxYNbksFZ9sLUU7HoiD3_Q&s=10' },
-  { label: 'Comedy Stage', url: '/manus-storage/async-images/uIT9JqJ72RrN8hkRBzMRU0/image-3.webp' },
-  { label: 'Sports Night', url: '/manus-storage/async-images/uIT9JqJ72RrN8hkRBzMRU0/image-4.webp' },
+  { label: 'Comedy Stage', url: '/artwork/comedy.jpg' },
+  { label: 'Sports Night', url: '/artwork/cricket.jpg' },
+  { label: 'Theatre Night', url: '/artwork/theatre.jpg' },
+  { label: 'Live Stage', url: '/artwork/hero-concert.jpg' },
 ];
 
 const CITIES = ['Hyderabad', 'Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Pune'];

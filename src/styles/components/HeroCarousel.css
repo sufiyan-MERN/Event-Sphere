@@ -1,4 +1,5 @@
 .hero-shell {
+  position: relative;
   width: min(1440px, calc(100% - 42px));
   margin: 19px auto 0;
 }
@@ -14,23 +15,53 @@
   animation: fade-up 0.55s ease both;
 }
 
-.hero-slide::before {
+/* Background layers --------------------------------------------------------
+   Two layers are kept alive so slides cross-fade instead of cutting. The
+   stack eases towards the pointer for a little depth; the visible layer gets
+   a slow Ken Burns push. */
+
+.hero-bg-stack {
   position: absolute;
-  z-index: -2;
+  z-index: 0;
+  inset: 0;
+  transform: translate3d(
+    calc(var(--px, 0) * -22px),
+    calc(var(--py, 0) * -14px),
+    0);
+  transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-bg {
+  position: absolute;
   inset: 0;
   background-image: var(--hero-image);
   background-position: center;
   background-size: cover;
-  content: "";
-  transform: scale(1.025);
-  animation: hero-zoom 8s ease-in-out infinite alternate;
+  opacity: 0;
+  transition: opacity 0.85s ease;
+}
+
+.hero-bg--current {
+  opacity: 1;
+  animation:
+    hero-bg-in 0.85s ease both,
+    hero-zoom 12s ease-out both;
+}
+
+.hero-bg--out {
+  opacity: 0;
+}
+
+@keyframes hero-bg-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Light wash keeps the poster art visible on the right while the copy side
    stays clean white for dark, readable headings. */
 .hero-slide::after {
   position: absolute;
-  z-index: -1;
+  z-index: 1;
   inset: 0;
   background:
     linear-gradient(
@@ -42,11 +73,12 @@
     ),
     linear-gradient(0deg, rgba(255, 255, 255, 0.5), transparent 54%);
   content: "";
+  pointer-events: none;
 }
 
 .hero-sheen {
   position: absolute;
-  z-index: -1;
+  z-index: 1;
   top: -170px;
   right: 2%;
   width: 440px;
@@ -56,9 +88,12 @@
   box-shadow:
     0 0 0 45px rgba(255, 107, 53, 0.03),
     0 0 0 96px rgba(255, 107, 53, 0.03);
+  pointer-events: none;
 }
 
 .hero-content {
+  position: relative;
+  z-index: 2;
   display: grid;
   min-height: 470px;
   grid-template-columns: minmax(0, 1fr) 260px;
@@ -69,6 +104,32 @@
 
 .hero-copy {
   max-width: 590px;
+}
+
+/* Staggered entrance — the copy block is re-keyed per slide, so these run
+   again on every change without any JS bookkeeping. */
+/* `backwards` (not `both`) so the finished animation releases the element
+   back to normal styles — hover transforms on the CTA keep working. */
+.hero-copy > *,
+.hero-copy .hero-cta {
+  animation: hero-item-in 0.72s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.hero-copy .hero-kicker { animation-delay: 0.07s; }
+.hero-copy h1 { animation-delay: 0.15s; }
+.hero-copy > p { animation-delay: 0.25s; }
+.hero-copy .hero-meta { animation-delay: 0.33s; }
+.hero-copy .hero-cta { animation-delay: 0.41s; }
+
+@keyframes hero-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-kicker {
@@ -87,6 +148,11 @@
   border-radius: 50%;
   background: var(--coral);
   box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.16);
+  animation: soft-pulse 2.2s ease-in-out infinite;
+}
+
+.hero-shell--paused .live-dot {
+  animation-play-state: paused;
 }
 
 .hero-copy h1 {
@@ -133,6 +199,21 @@
   min-height: 46px;
 }
 
+.hero-cta svg {
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-cta:hover svg,
+.hero-cta:focus-visible svg {
+  transform: translateX(5px);
+}
+
+.hero-cta:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Poster ------------------------------------------------------------------ */
+
 .hero-poster-wrap {
   position: relative;
   display: grid;
@@ -140,6 +221,11 @@
   place-items: center;
   width: 217px;
   height: 300px;
+  transform: translate3d(
+    calc(var(--px, 0) * 26px),
+    calc(var(--py, 0) * 18px),
+    0);
+  transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .hero-poster {
@@ -151,15 +237,34 @@
   border-radius: 12px;
   object-fit: cover;
   box-shadow: 0 28px 55px rgba(24, 24, 27, 0.22);
-  transform: rotate(4deg);
+  animation:
+    hero-poster-in 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both,
+    poster-float 7s ease-in-out 1.2s infinite;
+}
+
+@keyframes hero-poster-in {
+  from {
+    opacity: 0;
+    transform: rotate(10deg) translateY(28px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(4deg) translateY(0) scale(1);
+  }
+}
+
+@keyframes poster-float {
+  0%, 100% { transform: rotate(4deg) translateY(0); }
+  50% { transform: rotate(4deg) translateY(-11px); }
 }
 
 .poster-orbit {
   position: absolute;
   width: 224px;
   height: 224px;
-  border: 1px solid rgba(255, 107, 53, 0.35);
+  border: 1px solid rgba(255, 107, 53, 0.3);
   border-radius: 50%;
+  animation: spin-slow 28s linear infinite;
 }
 
 .poster-orbit::before,
@@ -185,8 +290,11 @@
   background: #F4511E;
 }
 
+/* Controls ---------------------------------------------------------------- */
+
 .hero-controls {
   position: absolute;
+  z-index: 3;
   right: 8%;
   bottom: 27px;
   left: 9.5%;
@@ -210,14 +318,27 @@
   color: #18181b;
   background: rgba(255, 255, 255, 0.85);
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.round-arrow svg {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .round-arrow:hover {
   border-color: rgba(255, 107, 53, 0.45);
   color: #F4511E;
   background: #fff4ed;
-  transform: scale(1.06);
+  box-shadow: 0 8px 18px rgba(255, 107, 53, 0.16);
+  transform: scale(1.08);
+}
+
+.round-arrow:first-child:hover svg { transform: translateX(-2px); }
+.round-arrow:last-child:hover svg { transform: translateX(2px); }
+
+.round-arrow:active {
+  transform: scale(0.92);
 }
 
 .hero-dots {
@@ -227,21 +348,51 @@
 }
 
 .hero-dot {
-  width: 6px;
-  height: 6px;
+  position: relative;
+  width: 7px;
+  height: 7px;
+  overflow: hidden;
   border: 0;
   border-radius: 999px;
   padding: 0;
   background: #d4d4d8;
   cursor: pointer;
   transition:
-    width 0.2s,
-    background 0.2s;
+    width 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.28s ease,
+    transform 0.2s ease;
+}
+
+.hero-dot:hover {
+  background: #a1a1aa;
+  transform: scale(1.15);
+}
+
+.hero-dot:active {
+  transform: scale(0.9);
 }
 
 .hero-dot--active {
-  width: 24px;
+  width: 30px;
+  background: rgba(255, 107, 53, 0.22);
+}
+
+.hero-dot__progress {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
   background: var(--coral);
+  transform-origin: left center;
+  animation: hero-dot-fill 7s linear both;
+}
+
+@keyframes hero-dot-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.hero-shell--paused .hero-dot__progress {
+  animation-play-state: paused;
 }
 
 .hero-count {
@@ -262,6 +413,7 @@
 
 .hero-side-note {
   position: absolute;
+  z-index: 3;
   top: 50%;
   right: 22px;
   color: rgba(24, 24, 27, 0.4);
@@ -270,6 +422,8 @@
   writing-mode: vertical-rl;
   transform: translateY(-50%);
 }
+
+/* Responsive -------------------------------------------------------------- */
 
 @media (max-width: 1100px) {
   .hero-content {
@@ -356,8 +510,8 @@
 
   .hero-content {
     position: relative;
-    min-height: 438px;
     display: block;
+    min-height: 438px;
     padding: 41px 22px 88px;
   }
 
@@ -421,5 +575,16 @@
 
   .hero-side-note {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-stack,
+  .hero-poster-wrap {
+    transform: none !important;
+  }
+
+  .hero-bg--current {
+    animation: none !important;
   }
 }

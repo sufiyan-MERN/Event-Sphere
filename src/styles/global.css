@@ -88,6 +88,23 @@ select:focus-visible {
   min-height: 100vh;
 }
 
+/* Route stage — a soft crossfade whenever the path changes, so moving
+   between pages never feels like a hard cut. */
+.route-stage {
+  animation: route-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes route-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .page-shell {
   width: min(1240px, calc(100% - 64px));
   margin: 0 auto;

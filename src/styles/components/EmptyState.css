@@ -6,6 +6,12 @@
 
 .empty-state p { max-width: 360px; margin: 0 0 16px; color: #71717A; font-size: 12px; }
 
+.empty-state--error { border-color: rgba(220, 38, 38, .28); background: linear-gradient(180deg, #FEF2F2, rgba(255, 255, 255, .62)); }
+
+.empty-state__icon--error { color: var(--error); background: #FEE2E2; }
+
+.empty-state--error .empty-state__icon { animation: soft-pulse 2.6s ease-in-out infinite; }
+
 .skeleton-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 
 .skeleton-card { padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
@@ -13,6 +19,22 @@
 .skeleton-card__image, .skeleton-line { border-radius: 7px; background: linear-gradient(90deg, #F4F4F5 25%, #F9FAFB 50%, #F4F4F5 75%); background-size: 200% 100%; animation: shimmer 1.4s ease infinite; }
 
 .skeleton-card__image { height: 190px; margin-bottom: 12px; }
+
+.skeleton-card__image--tall { height: 265px; }
+
+.skeleton-card__pill { width: 52px; height: 16px; margin-bottom: 11px; border-radius: 99px; background: linear-gradient(90deg, #F4F4F5 25%, #F9FAFB 50%, #F4F4F5 75%); background-size: 200% 100%; animation: shimmer 1.4s ease infinite; }
+
+.skeleton-grid--posters { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+@media (max-width: 1000px) {
+.skeleton-grid, .skeleton-grid--posters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+.skeleton-grid, .skeleton-grid--posters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+
+.skeleton-card__image, .skeleton-card__image--tall { height: 170px; }
+}
 
 .skeleton-line { height: 9px; margin: 7px 0; }
 

@@ -1,0 +1,174 @@
+/* ==========================================================================
+   ShowBook — motion system
+   Small, dependency-free reveal + micro-interaction layer.
+
+   Everything here is driven by data-attributes so components stay clean:
+     [data-reveal]              fade + slide up
+     [data-reveal="left|right|scale|blur|none"]
+     style={{ "--reveal-delay": 120 }}   stagger
+
+   `prefers-reduced-motion` is honoured globally in global.css and again
+   below, so nothing is ever hidden from users who ask for less motion.
+   ========================================================================== */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal="left"] {
+  transform: translate3d(-26px, 0, 0);
+}
+
+[data-reveal="right"] {
+  transform: translate3d(26px, 0, 0);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.96);
+}
+
+[data-reveal="blur"] {
+  filter: blur(8px);
+  transform: none;
+}
+
+[data-reveal="none"] {
+  transform: none;
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+  will-change: auto;
+}
+
+/* Safety net: if the observer never runs (old browser, JS hiccup) content
+   must never stay invisible. */
+.no-io [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Micro-interactions
+   -------------------------------------------------------------------------- */
+
+@keyframes heart-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.78); }
+  70% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+@keyframes nudge-right {
+  0% { transform: translateX(0); }
+  55% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+/* Light sweep that crosses a surface once on hover. */
+@keyframes sheen {
+  from { transform: translateX(-130%) skewX(-18deg); }
+  to { transform: translateX(230%) skewX(-18deg); }
+}
+
+@keyframes soft-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.86); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.08); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+/* Buttons and tappable surfaces share one tactile press state. */
+.button svg,
+.text-link svg,
+.nav-cta,
+.icon-button,
+.round-arrow,
+.favorite-button,
+.category-card,
+.offer-card {
+  transition-property: background, color, border-color, transform, box-shadow,
+    opacity;
+}
+
+.button:active:not(:disabled),
+.nav-cta:active,
+.icon-button:active,
+.round-arrow:active,
+.text-link:active,
+.offer-card:active,
+.category-card:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* Animated icon helpers ---------------------------------------------------- */
+
+.icon-nudge svg {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.icon-nudge:hover svg {
+  transform: translateX(4px);
+}
+
+/* A short sweep that only plays on hover, never on idle. */
+.sheen-host {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sheen-host::after {
+  position: absolute;
+  top: -60%;
+  left: 0;
+  width: 45%;
+  height: 220%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.38),
+    transparent
+  );
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sheen-host:hover::after {
+  opacity: 1;
+  animation: sheen 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .sheen-host::after {
+    display: none;
+  }
+}

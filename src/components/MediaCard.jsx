@@ -2,25 +2,31 @@ import { Link } from "react-router-dom";
 import { useBooking } from "../context/BookingContext.jsx";
 import { formatShortDate, money } from "../utils/format.js";
 import Icon from "./Icon.jsx";
+import PosterImage from "./PosterImage.jsx";
 import "../styles/components/MediaCard.css";
 
-export function MediaCard({ item, compact = false }) {
+export function MediaCard({ item, compact = false, revealDelay }) {
   const { favorites, toggleFavorite } = useBooking();
   const detailPath = `/${item.kind === "movie" ? "movies" : "events"}/${item.id}`;
   const saved = favorites.includes(item.id);
+  const revealStyle =
+    typeof revealDelay === "number" ? { "--reveal-delay": `${revealDelay}ms` } : undefined;
 
   return (
-    <article className={`media-card ${compact ? "media-card--compact" : ""}`}>
+    <article
+      className={`media-card ${compact ? "media-card--compact" : ""}`}
+      data-reveal
+      style={revealStyle}
+    >
       <Link
         className="media-card__image-link"
         to={detailPath}
         aria-label={`View ${item.title}`}
       >
-        <img
+        <PosterImage
           className="media-card__image"
           src={item.image}
           alt={`${item.title} artwork`}
-          loading="lazy"
         />
         <span className="media-card__image-shade" />
         <span className="media-card__tag">
@@ -76,12 +82,14 @@ export function MediaCard({ item, compact = false }) {
   );
 }
 
-export function MiniMovieCard({ item }) {
+export function MiniMovieCard({ item, revealDelay }) {
   const path = `/movies/${item.id}`;
+  const revealStyle =
+    typeof revealDelay === "number" ? { "--reveal-delay": `${revealDelay}ms` } : undefined;
   return (
-    <article className="mini-movie-card">
+    <article className="mini-movie-card" data-reveal style={revealStyle}>
       <Link to={path} className="mini-movie-card__poster">
-        <img src={item.image} alt={`${item.title} poster`} loading="lazy" />
+        <PosterImage src={item.image} alt={`${item.title} poster`} />
         <span className="mini-movie-card__rate">
           <Icon name="star" size={12} />
           {item.rating}

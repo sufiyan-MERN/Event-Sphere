@@ -1,18 +1,25 @@
+/*
+ * Artwork map.
+ *
+ * These used to point at `/manus-storage/...` paths that no longer exist in
+ * `public/`, which broke every hero slide and every event poster. The imagery
+ * now lives locally in `public/artwork/`, so it is served from our own origin,
+ * cached by the browser and can never 404 again.
+ */
 export const artwork = {
-  heroCinema: "/manus-storage/async-images/kmee1iP7nQM073fcd1xYSI/image-1.webp",
-  heroConcert:
-    "/manus-storage/async-images/kmee1iP7nQM073fcd1xYSI/image-2.webp",
-  heroComedy: "/manus-storage/async-images/kmee1iP7nQM073fcd1xYSI/image-3.webp",
-  film: "/manus-storage/async-images/uIT9JqJ72RrN8hkRBzMRU0/image-1.webp",
-  concert: "/manus-storage/async-images/uIT9JqJ72RrN8hkRBzMRU0/image-2.webp",
-  comedy: "/manus-storage/async-images/uIT9JqJ72RrN8hkRBzMRU0/image-3.webp",
-  cricket: "/manus-storage/async-images/uIT9JqJ72RrN8hkRBzMRU0/image-4.webp",
-  thriller: "/manus-storage/async-images/nHYnPcXOKuDVVYMXfepL7s/image-1.webp",
-  romance: "/manus-storage/async-images/nHYnPcXOKuDVVYMXfepL7s/image-2.webp",
-  theatre: "/manus-storage/async-images/nHYnPcXOKuDVVYMXfepL7s/image-3.webp",
-  workshop: "/manus-storage/async-images/nHYnPcXOKuDVVYMXfepL7s/image-4.webp",
-  kids: "/manus-storage/async-images/nHYnPcXOKuDVVYMXfepL7s/image-5.webp",
-  starlight: "/manus-storage/async-images/05Q0LaFYZuDixnjhbRTGgG/image-1.webp",
+  heroCinema: "/artwork/hero-cinema.jpg",
+  heroConcert: "/artwork/hero-concert.jpg",
+  heroComedy: "/artwork/hero-comedy.jpg",
+  film: "/artwork/film.jpg",
+  concert: "/artwork/concert.jpg",
+  comedy: "/artwork/comedy.jpg",
+  cricket: "/artwork/cricket.jpg",
+  thriller: "/artwork/thriller.jpg",
+  romance: "/artwork/romance.jpg",
+  theatre: "/artwork/theatre.jpg",
+  workshop: "/artwork/workshop.jpg",
+  kids: "/artwork/kids.jpg",
+  starlight: "/artwork/starlight.jpg",
 };
 
 export const categories = [
