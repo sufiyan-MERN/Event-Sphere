@@ -13,8 +13,8 @@ import {
   getCoupons,
   createCoupon,
   toggleCoupon,
-  resetDatabaseSeed,
-  getAdminDatabases,
+  // resetDatabaseSeed,
+  // getAdminDatabases,
 } from '../services/api.js';
 import Icon from '../components/Icon.jsx';
 import { money, formatLongDate } from '../utils/format.js';
@@ -396,14 +396,14 @@ export default function AdminPage() {
           >
             <span>Overview & Analytics</span>
           </button>
-          <button
+          {/* <button
             type="button"
             className={`admin-tab-btn ${activeTab === 'databases' ? 'active' : ''}`}
             onClick={() => setActiveTab('databases')}
           >
             <span>MongoDB Databases</span>
             <span className="tab-badge" style={{ background: '#10b981', color: '#fff' }}>4</span>
-          </button>
+          </button> */}
           <button
             type="button"
             className={`admin-tab-btn ${activeTab === 'catalog' ? 'active' : ''}`}
