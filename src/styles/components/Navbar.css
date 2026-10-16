@@ -12,7 +12,7 @@
   height: 80px;
   padding: 0 28px;
   border-bottom: 1px solid var(--line);
-  background: #e7e1aa;
+  background: #dfdfdf;
   transition:
     padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.45s ease,
@@ -24,7 +24,7 @@
 .site-header--scrolled {
   padding: 10px 20px;
   border-bottom-color: transparent;
-  background-color: #e7e1aa;
+  background-color: #dfdfdf;
   /* box-shadow: 0 12px 32px rgba(24, 24, 27, 0.06); */
 }
 

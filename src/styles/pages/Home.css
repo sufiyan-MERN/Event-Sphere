@@ -35,7 +35,7 @@
 
 .event-band {
     background: var(--ink);
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 .section-block--band {

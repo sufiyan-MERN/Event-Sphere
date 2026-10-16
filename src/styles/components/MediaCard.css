@@ -104,21 +104,23 @@
 
 .media-grid--featured .media-card {
   border-color: rgba(255, 255, 255, 0.13);
-  background: #18181b;
+  background:   #ffffff;
+  color: #000000;
 }
 
 .media-grid--featured .media-card__title {
-  color: #fff;
+  color: #000000;
 }
 
 .media-grid--featured .media-card__meta,
 .media-grid--featured .media-card__date {
-  color: #a1a1aa;
+  color: #000000;
 }
 
 .media-grid--featured .media-card__date svg {
   color: #ff6b35;
 }
+
 
 .media-card {
   position: relative;
@@ -137,6 +139,7 @@
   border-color: rgba(255, 107, 53, 0.26);
   box-shadow: 0 19px 37px rgba(24, 24, 27, 0.15);
   transform: translateY(-4px);
+  /* color: black; */
 }
 
 /* A soft orange highlight draws itself across the top edge on hover. */
@@ -366,9 +369,9 @@
   color: var(--coral-deep);
 }
 
-/* Dark band cards keep a light title, just warmed up on hover. */
+/* Featured cards on dark band with white background */
 .media-grid--featured .media-card:hover .media-card__title {
-  color: #ffe3d8;
+  color: var(--coral-deep);
 }
 
 .mini-movie-card__book svg {
